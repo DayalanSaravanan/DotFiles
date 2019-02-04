@@ -1,0 +1,1125 @@
+<head>
+<title>vi Reference</title>
+<link rel="help" href="http://www.facebook.com/pages/vi-Reference/122185502017" />
+</head>
+<body>
+<table border=0>
+<tr valign=bottom>
+<td width=90%>
+<h1><tt>vi Reference</tt></h1>
+</td>
+<td>
+ <script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script><script type="text/javascript">FB.init("90aa59336a14bf3bb1b0e2a79a685b9b");</script><fb:fan profile_id="122185502017" stream="" connections="" width="300"></fb:fan><div style="font-family:sans-serif; font-size:10px; padding-left:10px"><a href="http://www.facebook.com/pages/vi-Reference/122185502017">vi Reference on Facebook</a> is a blog that provides answers to topics suggested in the search engine hits that lead people to this page.</div>
+</td>
+</tr>
+</table>
+<hr>
+<pre>
+
+    Warning: some vi versions don't support the more esoteric features
+    described in this document.  You can edit/redistribute this document
+    freely, as long as you don't make false claims on original authorship.
+
+    Author: Maarten Litmaath &lt;maart@nat.vu.nl&gt;
+    Maintainer: James Hu &lt;jxh@despammed.com&gt;
+    Version: 11
+
+    This document is also available in <a href="vi.reference">plaintext</a> and <a href="vi.reference.pdf">PDF</a>.
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s20">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s2">contents</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s3">j</a></td>
+</tr>
+</table>
+<pre>
+
+    <a href="#s3">contributions</a>
+    <a href="#s4">legenda</a>
+    <a href="#s5">move commands</a>
+    <a href="#s6">searching</a>
+    <a href="#s7">undoing changes</a>
+    <a href="#s8">appending text</a>
+    <a href="#s9">deleting text</a>
+    <a href="#s10">changing text</a>
+    <a href="#s11">substitute replacement patterns</a>
+    <a href="#s12">remembering text</a>
+    <a href="#s13">commands while in append|change mode</a>
+    <a href="#s14">writing, editing other files, and quitting vi</a>
+    <a href="#s15">display commands</a>
+    <a href="#s16">mapping and abbreviation</a>
+    <a href="#s17">switch and shell commands</a>
+    <a href="#s18">vi startup</a>
+    <a href="#s19">changing and viewing options</a>
+    <a href="#s20">the most important options</a>
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s2">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s3">contributions</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s4">j</a></td>
+</tr>
+</table>
+<pre>
+
+    Rich Salz &lt;rsalz@bbn.com&gt;
+    Eamonn McManus &lt;emcmanus@cs.tcd.ie&gt;
+    Diomidis Spinellis &lt;diomidis%ecrcvax.uucp@pyramid.pyramid.com&gt;
+    Blair P. Houghton &lt;bph@buengc.bu.edu&gt;
+    Rusty Haddock &lt;{uunet,att,rutgers}!mimsy.umd.edu!fe2o3!rusty&gt;
+    Panos Tsirigotis &lt;panos@boulder.colorado.edu&gt;
+    David J. MacKenzie &lt;djm@wam.umd.edu&gt;
+    Kevin Carothers &lt;kevin@ttidca.tti.com&gt;
+    Dan Mercer &lt;mercer@ncrcce.StPaul.NCR.COM&gt;
+    Ze'ev Shtadler &lt;steed@il4cad.intel.com&gt;
+    Paul Quare &lt;pq@r2.cs.man.ac.uk&gt;
+    Dave Beyerl &lt;att!ihlpl!db21&gt;
+    Lee Sailer &lt;UH2@psuvm.psu.edu&gt;
+    David Gast &lt;gast@cs.ucla.edu&gt;
+    John Arundel &lt;john@splange.freeserve.co.uk&gt;
+    James Hu &lt;jxh@cs.wustl.edu&gt;
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s3">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s4">legenda</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s5">j</a></td>
+</tr>
+</table>
+<pre>
+
+    default values          : 1
+    &lt;*&gt;                     : `*' must not be taken literally
+    [*]                     : `*' is optional
+    ^X                      : &lt;ctrl&gt;X
+    &lt;sp&gt;                    : space
+    &lt;cr&gt;                    : carriage return
+    &lt;lf&gt;                    : linefeed
+    &lt;ht&gt;                    : horizontal tab
+    &lt;esc&gt;                   : escape
+    &lt;erase&gt;                 : your erase character
+    &lt;kill&gt;                  : your kill character
+    &lt;intr&gt;                  : your interrupt character
+    &lt;a-z&gt;                   : an element in the range
+    N                       : number (`*' = allowed, `-' = not appropriate)
+    CHAR                    : char unequal to &lt;ht&gt;|&lt;sp&gt;
+    WORD                    : word followed by &lt;ht&gt;|&lt;sp&gt;|&lt;lf&gt;
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s4">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s5">move commands</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s6">j</a></td>
+</tr>
+</table>
+<pre>
+
+     N | Command            | Meaning
+    ---+--------------------+-----------------------------------------------
+<a name="s5i1">     * | h | ^H | &lt;erase&gt;   | &lt;*&gt; chars to the left.</a>
+                            |
+<a name="s5i2">     * | j | &lt;lf&gt; | ^N      | &lt;*&gt; lines downward.</a>
+                            |
+<a name="s5i3">     * | l | &lt;sp&gt;           | &lt;*&gt; chars to the right.</a>
+                            |
+<a name="s5i4">     * | k | ^P             | &lt;*&gt; lines upward.</a>
+                            |
+<a name="s5i5">     * | $                  | To the end of line &lt;*&gt; from the cursor.</a>
+                            |
+<a name="s5i6">     - | ^                  | To the first CHAR of the line.</a>
+                            |
+<a name="s5i7">     * | _                  | To the first CHAR &lt;*&gt; - 1 lines lower.</a>
+                            |
+<a name="s5i8">     * | -                  | To the first CHAR &lt;*&gt; lines higher.</a>
+                            |
+<a name="s5i9">     * | + | &lt;cr&gt;           | To the first CHAR &lt;*&gt; lines lower.</a>
+                            |
+<a name="s5i10">     - | 0                  | To the first char of the line.</a>
+                            |
+<a name="s5i11">     * | |                  | To column &lt;*&gt; (&lt;ht&gt;: only to the endpoint).</a>
+                            |
+<a name="s5i12">     * | f&lt;char&gt;            | &lt;*&gt; &lt;char&gt;s to the right (find).</a>
+                            |
+<a name="s5i13">     * | t&lt;char&gt;            | Till before &lt;*&gt; &lt;char&gt;s to the right.</a>
+                            |
+<a name="s5i14">     * | F&lt;char&gt;            | &lt;*&gt; &lt;char&gt;s to the left.</a>
+                            |
+<a name="s5i15">     * | T&lt;char&gt;            | Till after &lt;*&gt; &lt;char&gt;s to the left.</a>
+                            |
+<a name="s5i16">     * | ;                  | Repeat latest `f'|`t'|`F'|`T' &lt;*&gt; times.</a>
+                            |
+<a name="s5i17">     * | ,                  | Idem in opposite direction.</a>
+                            |
+<a name="s5i18">     * | w                  | &lt;*&gt; words forward.</a>
+                            |
+<a name="s5i19">     * | W                  | &lt;*&gt; WORDS forward.</a>
+                            |
+<a name="s5i20">     * | b                  | &lt;*&gt; words backward.</a>
+                            |
+<a name="s5i21">     * | B                  | &lt;*&gt; WORDS backward.</a>
+                            |
+<a name="s5i22">     * | e                  | To the end of word &lt;*&gt; forward.</a>
+                            |
+<a name="s5i23">     * | E                  | To the end of WORD &lt;*&gt; forward.</a>
+                            |
+<a name="s5i24">     * | G                  | Go to line &lt;*&gt; (default EOF).</a>
+                            |
+<a name="s5i25">     * | H                  | To line &lt;*&gt; from top of the screen (home).</a>
+                            |
+<a name="s5i26">     * | L                  | To line &lt;*&gt; from bottom of the screen (last).</a>
+                            |
+<a name="s5i27">     - | M                  | To the middle line of the screen.</a>
+                            |
+<a name="s5i28">     * | )                  | &lt;*&gt; sentences forward.</a>
+                            |
+<a name="s5i29">     * | (                  | &lt;*&gt; sentences backward.</a>
+                            |
+<a name="s5i30">     * | }                  | &lt;*&gt; paragraphs forward.</a>
+                            |
+<a name="s5i31">     * | {                  | &lt;*&gt; paragraphs backward.</a>
+                            |
+<a name="s5i32">     - | ]]                 | To the next section (default EOF).</a>
+                            |
+<a name="s5i33">     - | [[                 | To the previous section (default begin of file).</a>
+                            |
+<a name="s5i34">     - | `&lt;a-z&gt;             | To the mark.</a>
+                            |
+<a name="s5i35">     - | '&lt;a-z&gt;             | To the first CHAR of the line with the mark.</a>
+                            |
+<a name="s5i36">     - | ``                 | To the cursor position before the latest absolute</a>
+                            |   jump (of which are examples `/' and `G').
+                            |
+<a name="s5i37">     - | ''                 | To the first CHAR of the line on which the cursor</a>
+                            |   was placed before the latest absolute jump.
+                            |
+<a name="s5i38">     - | /&lt;string&gt;[/]       | To the next occurrence of &lt;string&gt;.</a>
+                            |
+<a name="s5i39">     - | /[/]               | To the next occurrence of the latest search</a>
+                            |   item.
+                            |
+<a name="s5i40">     - | ?&lt;string&gt;[?]       | To the previous occurrence of &lt;string&gt;.</a>
+                            |
+<a name="s5i41">     - | ?[?]               | To the previous occurrence of the latest search</a>
+                            |   item.
+                            |
+<a name="s5i42">     - | /&lt;string&gt;/+[n]     | To n-th (default 1st) line after next occurrence</a>
+                            |   of &lt;string&gt;.
+                            |
+<a name="s5i43">     - | ?&lt;string&gt;?+[n]     | Idem, searching in the opposite direction.</a>
+                            |
+<a name="s5i44">     - | /&lt;string&gt;/-[n]     | To n-th (default 1st) line before next occurrence</a>
+                            |   of &lt;string&gt;.
+                            |
+<a name="s5i45">     - | ?&lt;string&gt;?-[n]     | Idem, searching in the opposite direction.</a>
+                            |
+<a name="s5i46">     - | &lt;find&gt;[;&lt;find&gt;]    | Perform successive `/'|`?' actions.  For example,</a>
+                            |   /foo/;/bar        - to next `foo', then
+                            |                        to next `bar'
+                            |   ?foo?-;/bar       - to line before previous
+                            |                        `foo', then to next `bar'
+                            |
+<a name="s5i47">     - | :/&lt;string&gt;[/]      | To the next line containing an occurrence of</a>
+                            |   &lt;string&gt;.
+                            |
+<a name="s5i48">     - | :/[/]              | To the next line containing an occurrence of</a>
+                            |   the latest searched for item.
+                            |
+<a name="s5i49">     - | :?&lt;string&gt;[?]      | To the previous line containing an occurrence</a>
+                            |   of &lt;string&gt;.
+                            |
+<a name="s5i50">     - | :?[?]              | To the previous line containing an occurrence</a>
+                            |   of the latest searched for item.
+                            |
+<a name="s5i51">     - | :/&lt;string&gt;/+[n]    | To n-th (default 1st) line after next occurrence</a>
+                            |   of &lt;string&gt;.
+                            |
+<a name="s5i52">     - | :?&lt;string&gt;?+[n]    | Idem, searching in the opposite direction.</a>
+                            |
+<a name="s5i53">     - | :/&lt;string&gt;/-[n]    | To n-th (default 1st) line before next occurrence</a>
+                            |   of &lt;string&gt;.
+                            |
+<a name="s5i54">     - | :?&lt;string&gt;?-[n]    | Idem, searching in the opposite direction.</a>
+                            |
+<a name="s5i55">     - | :&lt;find&gt;[;&lt;find&gt;]   | Perform successive `/'|`?' actions.  Each &lt;find&gt;</a>
+                            |   is of the form /&lt;string/[+[n]] or
+                            |   ?&lt;string&gt;?[+[n]].
+                            |
+<a name="s5i56">     - | n                  | Repeat latest `/'|`?' (next).</a>
+                            |
+<a name="s5i57">     - | N                  | Idem in opposite direction.</a>
+                            |
+<a name="s5i58">     - | %                  | Find the next bracket and go to its match</a>
+                            |   (also with `{'|`}' and `['|`]').
+                            |
+<a name="s5i59">     - | :[x]               | To the line specified by x.</a>
+                            |
+<a name="s5i60">     - | :[x]+[n]           | To n-th (default 1st) line after line specified</a>
+                            |   by x.
+                            |
+<a name="s5i61">     - | :[x]-[n]           | To n-th (default 1st) line before line specified</a>
+                            |   by x.
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s5">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s6">searching (see above)</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s7">j</a></td>
+</tr>
+</table>
+<pre>
+
+    In `:' `ex' commands, an `ex' command that moves the cursor to a line of
+    the file is a valid line number argument for commands that operate on
+    lines and line ranges.  `.' can be used as a synonym for the current
+    line.  See also `writing, editing other files, and quitting vi'.
+
+<a name="s6i1">    :ta &lt;name&gt;              | Search in the tags file[s] where &lt;name&gt; is</a>
+                            |   defined (file, line), and go to it.
+                            |
+<a name="s6i2">    ^]                      | Use the name under the cursor in a `:ta' command.</a>
+                            |
+<a name="s6i3">    ^T                      | Pop the previous tag off the tagstack and return</a>
+                            |   to its position.
+                            |
+<a name="s6i4">    :[x,y]g/&lt;string&gt;/&lt;cmd&gt;  | Search globally [from line x to y] for &lt;string&gt;</a>
+                            |   and execute the `ex' &lt;cmd&gt; on each occurrence.
+                            |   Multiple &lt;cmd&gt;'s are separated by `|'.
+                            |
+<a name="s6i5">    :[x,y]g/&lt;s1&gt;/,/&lt;s2&gt;/&lt;c&gt; | Search globally [from line x to y] for &lt;s1&gt; and</a>
+                            |   execute the `ex' command &lt;c&gt; on each line
+                            |   between &lt;s1&gt; and the line that matches &lt;s2&gt;.
+                            |
+<a name="s6i6">    :[x,y]v/&lt;string&gt;/&lt;cmd&gt;  | Execute &lt;cmd&gt; on the lines that don't match.</a>
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s6">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s7">undoing changes</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s8">j</a></td>
+</tr>
+</table>
+<pre>
+
+<a name="s7i1">    u                       | Undo the latest change.</a>
+                            |
+<a name="s7i2">    U                       | Undo all changes on a line, while not having</a>
+                            |   moved off it (unfortunately).
+                            |
+<a name="s7i3">    :u                      | Undo last substituion on line (only one)</a>
+                            |
+<a name="s7i4">    :q!                     | Quit vi without writing.</a>
+                            |
+<a name="s7i5">    :e!                     | Re-edit a messed-up file.</a>
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s7">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s8">appending text (end with &lt;esc&gt;)</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s9">j</a></td>
+</tr>
+</table>
+<pre>
+
+<a name="s8i1">     * | a                  | &lt;*&gt; times after the cursor.</a>
+                            |
+<a name="s8i2">     * | A                  | &lt;*&gt; times at the end of line.</a>
+                            |
+<a name="s8i3">     * | i                  | &lt;*&gt; times before the cursor (insert).</a>
+                            |
+<a name="s8i4">     * | I                  | &lt;*&gt; times before the first CHAR of the line</a>
+                            |
+<a name="s8i5">     * | o                  | On a new line below the current (open).</a>
+                            |   The count is only useful on a slow terminal.
+                            |
+<a name="s8i6">     * | O                  | On a new line above the current.</a>
+                            |   The count is only useful on a slow terminal.
+                            |
+<a name="s8i7">     * | &gt;&lt;move&gt;            | Shift the lines described by &lt;*&gt;&lt;move&gt; one</a>
+                            |   shiftwidth to the right.
+                            |
+<a name="s8i8">     * | &gt;&gt;                 | Shift &lt;*&gt; lines one shiftwidth to the right.</a>
+                            |
+<a name="s8i9">     * | ["&lt;a-zA-Z1-9&gt;]p    | Put the contents of the (default undo) buffer</a>
+                            |   &lt;*&gt; times after the cursor.
+                            |   A buffer containing lines is put only once,
+                            |   below the current line.  See `deleting text'.
+                            |
+<a name="s8i10">     * | ["&lt;a-zA-Z1-9&gt;]P    | Put the contents of the (default undo) buffer</a>
+                            |   &lt;*&gt; times before the cursor.
+                            |   A buffer containing lines is put only once,
+                            |   above the current line.  See `deleting text'.
+                            |
+<a name="s8i11">     * | .                  | Repeat previous command &lt;*&gt; times.  If the last</a>
+                            |   command before a `.' command references a
+                            |   numbered buffer, the buffer number is
+                            |   incremented first (and the count is ignored):
+                            |
+                            |   "1pu.u.u.u.u      - `walk through' buffers 1
+                            |                       through 5
+                            |   "1P....           - restore them
+                            |
+<a name="s8i12">     - | :[x,y]t&lt;l&gt;         | Copy lines x through y (default current line)</a>
+                            |   to be after line &lt;l&gt;.  See `remembering text'.
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s8">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s9">deleting text</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s10">j</a></td>
+</tr>
+</table>
+<pre>
+
+    Everything deleted can be stored into a buffer. This is achieved
+    by putting a `"' and a letter &lt;a-z&gt; before the delete command. The
+    deleted text will be in the buffer with the used letter. If &lt;A-Z&gt; is
+    used as buffer name, the conjugate buffer &lt;a-z&gt; will be augmented
+    (i.e., appended) instead of overwritten with the text. The undo
+    buffer always contains the latest change. Buffers &lt;1-9&gt; contain
+    the latest 9 LINE deletions (`"1' is most recent).  See also
+    `remembering text'.
+
+<a name="s9i1">     * | x                  | Delete &lt;*&gt; chars under and after the cursor.</a>
+                            |
+<a name="s9i2">     * | X                  | &lt;*&gt; chars before the cursor.</a>
+                            |
+<a name="s9i3">     * | d&lt;move&gt;            | From begin to endpoint of &lt;*&gt;&lt;move&gt;.</a>
+                            |
+<a name="s9i4">     * | dd                 | &lt;*&gt; lines.</a>
+                            |
+<a name="s9i5">     - | D                  | The rest of the line.</a>
+                            |
+<a name="s9i6">     * | &lt;&lt;move&gt;            | Shift the lines described by &lt;*&gt;&lt;move&gt; one</a>
+                            |   shiftwidth to the left.
+                            |
+<a name="s9i7">     * | &lt;&lt;                 | Shift &lt;*&gt; lines one shiftwidth to the left.</a>
+                            |
+<a name="s9i8">     * | .                  | Repeat latest command &lt;*&gt; times.</a>
+                            |
+<a name="s9i9">     - | :[x,y]d            | Delete lines x through y</a>
+                            |   (default current line and next).
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s9">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s10">changing text (end with &lt;esc&gt;)</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s11">j</a></td>
+</tr>
+</table>
+<pre>
+
+<a name="s10i1">     * | r&lt;char&gt;            | Replace &lt;*&gt; chars by &lt;char&gt; - no &lt;esc&gt;.</a>
+                            |
+<a name="s10i2">     * | R                  | Overwrite the rest of the line,</a>
+                            |   appending change &lt;*&gt; - 1 times.
+                            |
+<a name="s10i3">     * | s                  | Substitute &lt;*&gt; chars.</a>
+                            |
+<a name="s10i4">     * | S                  | &lt;*&gt; lines.</a>
+                            |
+<a name="s10i5">     * | c&lt;move&gt;            | Change from begin to endpoint of &lt;*&gt;&lt;move&gt;.</a>
+                            |
+<a name="s10i6">     * | cc                 | &lt;*&gt; lines.</a>
+                            |
+<a name="s10i7">     * | C                  | The rest of the line and &lt;*&gt; - 1 next lines.</a>
+                            |
+<a name="s10i8">     * | =&lt;move&gt;            | If the option `lisp' is set, this command</a>
+                            |   will realign the lines described by &lt;*&gt;&lt;move&gt;
+                            |   as though they had been typed with the option
+                            |   `ai' set too.
+                            |
+<a name="s10i9">     - | ~                  | Switch lower and upper cases</a>
+                            |   (should be an operator, like `c').
+                            |
+<a name="s10i10">     * | J                  | Join &lt;*&gt; lines (default 2).</a>
+                            |
+<a name="s10i11">     * | .                  | Repeat latest command &lt;*&gt; times (`J' only once).</a>
+                            |
+<a name="s10i12">     - | &amp;                  | Repeat latest `ex' substitute command, e.g.</a>
+                            |   `:s/wrong/good'.
+                            |
+<a name="s10i13">     - | :[x,y]j            | Join lines x through y</a>
+                            |   (default current line and next).
+                            |
+<a name="s10i14">     - | :[x,y]j!           | Idem, but with no space inbetween.</a>
+                            |
+<a name="s10i15">     - | :[x,y]m&lt;l&gt;         | Move lines x through y (default current line)</a>
+                            |   to be after line &lt;l&gt;.  See `remembering text'.
+                            |
+<a name="s10i16">     - | :[x,y]s/&lt;p&gt;/&lt;r&gt;/&lt;f&gt;| Substitute (on lines x through y) the pattern &lt;p&gt;</a>
+                            |   (default the last pattern) with &lt;r&gt;.  Useful
+                            |   flags &lt;f&gt; are `g' for `global' (i.e. change
+                            |   every non-overlapping occurrence of &lt;p&gt;) and
+                            |   `c' for `confirm' (type `y' to confirm a
+                            |   particular substitution, else &lt;cr&gt;).  Instead
+                            |   of `/' any punctuation CHAR unequal to &lt;lf&gt;
+                            |   can be used as delimiter.
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s10">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s11">substitute replacement patterns</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s12">j</a></td>
+</tr>
+</table>
+<pre>
+
+    The basic meta-characters for the replacement pattern are `&amp;'
+    and `~'; these are given as `\&amp;' and `\~' when nomagic is set.
+    Each instance of `&amp;' is replaced by the characters which the
+    regular expression matched.  The meta-character `~' stands, in
+    the replacement pattern, for the defining text of the previous
+    replacement pattern.  Other meta-sequences possible in the
+    replacement pattern are always introduced by the escaping character
+    `\'. The sequence `\n' (with `n' in [1-9]) is replaced by the text
+    matched by the n-th regular subexpression enclosed between `\(' and
+    `\)'. The sequences `\u' and `\l' cause the immediately following
+    character in the replacement to be converted to upper- or lower-case
+    respectively if this character is a letter.  The sequences `\U'
+    and `\L' turn such conversion on, either until `\E' or `\e' is
+    encountered, or until the end of the replacement pattern.  See the
+    `magic' option for additional meta-characters.  Some examples of
+    substitutions are shown below.
+
+          :s/foo/\u&amp;                      - turn `foo' into `Foo'
+          :s/foo/\U&amp;                      - turn `foo' into `FOO'
+          :s/\(foo\) \(bar\)/\U\1\E \u\2  - turn `foo bar' into `FOO Bar'
+          :s/foo/\u&amp;/|s/bar/~             - capitalize foo, then
+                                            capitalize bar
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s11">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s12">remembering text (yanking)</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s13">j</a></td>
+</tr>
+</table>
+<pre>
+
+    With yank commands you can put `"&lt;a-zA-Z&gt;' before the command, just
+    as with delete commands (see `deleting text').  Otherwise you only
+    copy to the undo buffer.  Using the capital letters appends to the
+    buffer.  The use of buffers &lt;a-z&gt; is THE way of copying text to
+    another file; see the `:e &lt;file&gt;' command.
+
+<a name="s12i1">     * | y&lt;move&gt;            | Yank from begin to endpoint of &lt;*&gt;&lt;move&gt;.</a>
+                            |
+<a name="s12i2">     * | yy                 | &lt;*&gt; lines.</a>
+                            |
+<a name="s12i3">     * | Y                  | Idem (should be equivalent to `y$' though).</a>
+                            |
+<a name="s12i4">     - | :[x,y]y&lt;a-zA-Z&gt;    | Yank lines x through y into named buffer.</a>
+                            |   Using the capital letter will append to the
+                            |   buffer.
+                            |
+<a name="s12i5">     - | m&lt;a-z&gt;             | Mark the cursor position with a letter.</a>
+                            |
+<a name="s12i6">     - | :[x]k&lt;a-z&gt;         | Mark line x (default current) with a letter.</a>
+                            |   The letter can be used to refer to the
+                            |   line in another ex command:
+                            |
+                            |   :/aaa/ka   - mark next line matching aaa
+                            |   :'a,'a+3d  - delete that line and the three
+                            |                following it
+                            |   :?bbb?kb   - mark previous line matching bbb
+                            |   :'bm.      - move that line to be after current
+                            |                line
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s12">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s13">commands while in append|change mode</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s14">j</a></td>
+</tr>
+</table>
+<pre>
+
+<a name="s13i1">    ^@                      | If typed as the first character of the</a>
+                            |   insertion, it is replaced with the previous
+                            |   text inserted (max. 128 chars), after which
+                            |   the insertion is terminated.
+                            |
+<a name="s13i2">    ^V                      | Deprive the next char of its special meaning</a>
+                            |   (e.g. &lt;esc&gt;).
+                            |
+<a name="s13i3">    ^D                      | One shiftwidth to the left, but only if</a>
+                            |   nothing else has been typed on the line.
+                            |
+<a name="s13i4">    0^D                     | Remove all indentation on the current line</a>
+                            |   (there must be no other chars on the line).
+                            |
+<a name="s13i5">    ^^D                     | Idem, but it is restored on the next line.</a>
+                            |
+<a name="s13i6">    ^T                      | One shiftwidth to the right, but only if</a>
+                            |   nothing else has been typed on the line.
+                            |
+<a name="s13i7">    ^H | &lt;erase&gt;            | One char back.</a>
+                            |
+<a name="s13i8">    ^W                      | One word back.</a>
+                            |
+<a name="s13i9">    &lt;kill&gt;                  | Back to the begin of the change on the</a>
+                            |   current line.
+                            |
+<a name="s13i10">    &lt;intr&gt;                  | Like &lt;esc&gt; (but you get a beep as well).</a>
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s13">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s14">writing, editing other files, and quitting vi</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s15">j</a></td>
+</tr>
+</table>
+<pre>
+
+    In `:' `ex' commands - if not the first CHAR on the line - `%' denotes
+    the current file, `#' is a synonym for the alternate file (which
+    normally is the previous file).  As first CHAR on the line `%' is a
+    shorthand for `1,$'.  Marks can be used for line numbers too: '&lt;a-z&gt;.
+    In the `:w'|`:f'|`:cd'|`:e'|`:n' commands shell meta-characters can be
+    used.
+
+<a name="s14i1">    :q                      | Quit vi, unless the buffer has been changed.</a>
+                            |
+<a name="s14i2">    :q!                     | Quit vi without writing.</a>
+                            |
+<a name="s14i3">    ^Z                      | Suspend vi.</a>
+                            |
+<a name="s14i4">    :w                      | Write the file.</a>
+                            |
+<a name="s14i5">    :w &lt;name&gt;               | Write to the file &lt;name&gt;.</a>
+                            |
+<a name="s14i6">    :w &gt;&gt; &lt;name&gt;            | Append the buffer to the file &lt;name&gt;.</a>
+                            |
+<a name="s14i7">    :w! &lt;name&gt;              | Overwrite the file &lt;name&gt;.</a>
+                            |
+<a name="s14i8">    :x,y w &lt;name&gt;           | Write lines x through y to the file &lt;name&gt;.</a>
+                            |
+<a name="s14i9">    :wq                     | Write the file and quit vi; some versions quit</a>
+                            |   even if the write was unsuccessful!
+                            |   Use `ZZ' instead.
+                            |
+<a name="s14i10">    ZZ                      | Write if the buffer has been changed, and</a>
+                            |   quit vi.  If you have invoked vi with the `-r'
+                            |   option, you'd better write the file
+                            |   explicitly (`w' or `w!'), or quit the
+                            |   editor explicitly (`q!') if you don't want
+                            |   to overwrite the file - some versions of vi
+                            |   don't handle the `recover' option very well.
+                            |
+<a name="s14i11">    :x [&lt;file&gt;]             | Idem [but write to &lt;file&gt;].</a>
+                            |
+<a name="s14i12">    :x! [&lt;file&gt;]            | `:w![&lt;file&gt;]' and `:q'.</a>
+                            |
+<a name="s14i13">    :pre                    | Preserve the file - the buffer is saved as if</a>
+                            |   the system had just crashed; for emergencies,
+                            |   when a `:w' command has failed and you don't
+                            |   know how to save your work (see `vi -r').
+                            |
+<a name="s14i14">    :f &lt;name&gt;               | Set the current filename to &lt;name&gt;.</a>
+                            |
+<a name="s14i15">    :cd [&lt;dir&gt;]             | Set the working directory to &lt;dir&gt;</a>
+                            |   (default home directory).
+                            |
+<a name="s14i16">    :cd! [&lt;dir&gt;]            | Idem, but don't save changes.</a>
+                            |
+<a name="s14i17">    :e [+&lt;cmd&gt;] &lt;file&gt;      | Edit another file without quitting vi - the</a>
+                            |   buffers are not changed (except the undo
+                            |   buffer), so text can be copied from one file to
+                            |   another this way.  [Execute the `ex' command
+                            |   &lt;cmd&gt; (default `$') when the new file has been
+                            |   read into the buffer.]  &lt;cmd&gt; must contain no
+                            |   &lt;sp&gt; or &lt;ht&gt;.  See `vi startup'.
+                            |
+<a name="s14i18">    :e! [+&lt;cmd&gt;] &lt;file&gt;     | Idem, without writing the current buffer.</a>
+                            |
+<a name="s14i19">    ^^                      | Edit the alternate (normally the previous) file.</a>
+                            |
+<a name="s14i20">    :rew                    | Rewind the argument list, edit the first file.</a>
+                            |
+<a name="s14i21">    :rew!                   | Idem, without writing the current buffer.</a>
+                            |
+<a name="s14i22">    :n [+&lt;cmd&gt;] [&lt;files&gt;]   | Edit next file or specify a new argument list.</a>
+                            |
+<a name="s14i23">    :n! [+&lt;cmd&gt;] [&lt;files&gt;]  | Idem, without writing the current buffer.</a>
+                            |
+<a name="s14i24">    :args                   | Give the argument list, with the current file</a>
+                            |   between `[' and `]'.
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s14">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s15">display commands</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s16">j</a></td>
+</tr>
+</table>
+<pre>
+
+<a name="s15i1">    ^G                      | Give file name, status, current line number</a>
+                            |   and relative position.
+                            |
+<a name="s15i2">    ^L                      | Refresh the screen (sometimes `^P' or `^R').</a>
+                            |
+<a name="s15i3">    ^R                      | Sometimes vi replaces a deleted line by a `@',</a>
+                            |   to be deleted by `^R' (see option `redraw').
+                            |
+<a name="s15i4">    [*]^E                   | Expose &lt;*&gt; more lines at bottom, cursor</a>
+                            |   stays put (if possible).
+                            |
+<a name="s15i5">    [*]^Y                   | Expose &lt;*&gt; more lines at top, cursor</a>
+                            |   stays put (if possible).
+                            |
+<a name="s15i6">    [*]^D                   | Scroll &lt;*&gt; lines downward</a>
+                            |   (default the number of the previous scroll;
+                            |   initialization: half a page).
+                            |
+<a name="s15i7">    [*]^U                   | Scroll &lt;*&gt; lines upward</a>
+                            |   (default the number of the previous scroll;
+                            |   initialization: half a page).
+                            |
+<a name="s15i8">    [*]^F                   | &lt;*&gt; pages forward.</a>
+                            |
+<a name="s15i9">    [*]^B                   | &lt;*&gt; pages backward (in older versions `^B' only</a>
+                            |   works without count).
+                            |
+<a name="s15i10">    :[x,y]l                 | List lines x through y (default current),</a>
+                            |   making invisible characters visible.
+                            |
+<a name="s15i11">    :[x,y]p                 | Print lines x through y (default current).</a>
+                            |
+<a name="s15i12">    :[x,y]nu                | List lines x through y (default current),</a>
+                            |   with line numbers next to each line.
+
+    If in the next commands the field &lt;wi&gt; is present, the windowsize
+    will change to &lt;wi&gt;. The window will always be displayed at the
+    bottom of the screen.
+
+<a name="s15i13">    [*]z[wi]&lt;cr&gt;            | Put line &lt;*&gt; at the top of the window</a>
+                            |   (default the current line).
+                            |
+<a name="s15i14">    [*]z[wi]+               | Put line &lt;*&gt; at the top of the window</a>
+                            |   (default the first line of the next page).
+                            |
+<a name="s15i15">    [*]z[wi]-               | Put line &lt;*&gt; at the bottom of the window</a>
+                            |   (default the current line).
+                            |
+<a name="s15i16">    [*]z[wi]^               | Put line &lt;*&gt; at the bottom of the window</a>
+                            |   (default the last line of the previous page).
+                            |
+<a name="s15i17">    [*]z[wi].               | Put line &lt;*&gt; in the centre of the window</a>
+                            |   (default the current line).
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s15">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s16">mapping and abbreviation</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s17">j</a></td>
+</tr>
+</table>
+<pre>
+
+    When mapping take a look at the options `to' and `remap' (below).
+
+<a name="s16i1">    :map &lt;string&gt; &lt;seq&gt;     | &lt;string&gt; is interpreted as &lt;seq&gt;, e.g.</a>
+                            |   `:map ^C :!cc %^V&lt;cr&gt;' to invoke `cc' (the C
+                            |   compiler) from within the editor
+                            |   (vi replaces `%' with the current file name).
+                            |
+<a name="s16i2">    :map                    | Show all mappings.</a>
+                            |
+<a name="s16i3">    :unmap &lt;string&gt;         | Deprive &lt;string&gt; of its mapping.  When vi</a>
+                            |   complains about non-mapped macros (whereas no
+                            |   typos have been made), first do something like
+                            |   `:map &lt;string&gt; Z', followed by
+                            |   `:unmap &lt;string&gt;' (`Z' must not be a macro
+                            |   itself), or switch to `ex' mode first with `Q'.
+                            |
+<a name="s16i4">    :map! &lt;string&gt; &lt;seq&gt;    | Mapping in append mode, e.g.</a>
+                            |   `:map! \be begin^V&lt;cr&gt;end;^V&lt;esc&gt;O&lt;ht&gt;'.
+                            |   When in append mode &lt;string&gt; is preceded by
+                            |   `^V', no mapping is done.
+                            |
+<a name="s16i5">    :map!                   | Show all append mode mappings.</a>
+                            |
+<a name="s16i6">    :unmap! &lt;string&gt;        | Deprive &lt;string&gt; of its mapping (see `:unmap').</a>
+                            |
+<a name="s16i7">    :ab &lt;string&gt; &lt;seq&gt;      | Whenever in append mode &lt;string&gt; is preceded and</a>
+                            |   followed by a breakpoint (e.g. &lt;sp&gt; or `,'), it
+                            |   is interpreted as &lt;seq&gt;, e.g.
+                            |   `:ab ^P procedure'.  A `^V' immediately
+                            |   following &lt;string&gt; inhibits expansion.
+                            |
+<a name="s16i8">    :ab                     | Show all abbreviations.</a>
+                            |
+<a name="s16i9">    :unab &lt;string&gt;          | Do not consider &lt;string&gt; an abbreviation</a>
+                            |   anymore (see `:unmap').
+                            |
+<a name="s16i10">    @&lt;a-z&gt;                  | Consider the contents of the named register a</a>
+                            |   command, e.g.:
+                            |       o0^D:s/wrong/good/&lt;esc&gt;"zdd
+                            |   Explanation:
+                            |       o              - open a new line
+                            |       0^D            - remove indentation
+                            |       :s/wrong/good/ - this input text is an
+                            |                        `ex' substitute command
+                            |       &lt;esc&gt;          - finish the input
+                            |       "zdd           - delete the line just
+                            |                        created into register `z'
+                            |   Now you can type `@z' to replace `wrong'
+                            |   with `good' on the current line.
+                            |
+<a name="s16i11">    @@                      | Repeat last register command.</a>
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s16">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s17">switch and shell commands</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s18">j</a></td>
+</tr>
+</table>
+<pre>
+
+<a name="s17i1">    Q | ^\ | &lt;intr&gt;&lt;intr&gt;   | Switch from vi to `ex'.</a>
+                            |
+<a name="s17i2">    :                       | An `ex' command can be given.</a>
+                            |
+<a name="s17i3">    :vi                     | Switch from `ex' to vi.</a>
+                            |
+<a name="s17i4">    :sh                     | Execute a subshell, back to vi by `^D'.</a>
+                            |
+<a name="s17i5">    :[x,y]!&lt;cmd&gt;            | Execute a shell &lt;cmd&gt; [on lines x through y;</a>
+                            |   these lines will serve as input for &lt;cmd&gt; and
+                            |   will be replaced by its standard output].
+                            |
+<a name="s17i6">    :[x,y]!! [&lt;args&gt;]       | Repeat last shell command [and append &lt;args&gt;].</a>
+                            |
+<a name="s17i7">    :[x,y]!&lt;cmd&gt; ! [&lt;args&gt;] | Use the previous command (the second `!') in a</a>
+                            |   new command.
+                            |
+<a name="s17i8">    [*]!&lt;move&gt;&lt;cmd&gt;         | The shell executes &lt;cmd&gt;, with as standard</a>
+                            |   input the lines described by &lt;*&gt;&lt;move&gt;,
+                            |   next the standard output replaces those lines
+                            |   (think of `cb', `sort', `nroff', etc.).
+                            |
+<a name="s17i9">    [*]!&lt;move&gt;!&lt;args&gt;       | Append &lt;args&gt; to the last &lt;cmd&gt; and execute it,</a>
+                            |   using the lines described by the current
+                            |   &lt;*&gt;&lt;move&gt;.
+                            |
+<a name="s17i10">    [*]!!&lt;cmd&gt;              | Give &lt;*&gt; lines as standard input to the</a>
+                            |   shell &lt;cmd&gt;, next let the standard output
+                            |   replace those lines.
+                            |
+<a name="s17i11">    [*]!!! [&lt;args&gt;]         | Use the previous &lt;cmd&gt; [and append &lt;args&gt; to it].</a>
+                            |
+<a name="s17i12">    :x,y w !&lt;cmd&gt;           | Let lines x to y be standard input for &lt;cmd&gt;</a>
+                            |   (notice the &lt;sp&gt; between the `w' and the `!').
+                            |
+<a name="s17i13">    :r!&lt;cmd&gt;                | Put the output of &lt;cmd&gt; onto a new line.</a>
+                            |
+<a name="s17i14">    :r &lt;name&gt;               | Read the file &lt;name&gt; into the buffer.</a>
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s17">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s18">vi startup</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s19">j</a></td>
+</tr>
+</table>
+<pre>
+
+<a name="s18i1">    vi [&lt;files&gt;]            | Edit the files, start with the first page of</a>
+                            |   the first file.
+
+    The editor can be initialized by the shell variable `EXINIT', which
+    looks like:
+
+            EXINIT='&lt;cmd&gt;|&lt;cmd&gt;|...'
+            &lt;cmd&gt;: set options
+                   map ...
+                   ab ...
+            export EXINIT (in the Bourne shell)
+
+    However, the list of initializations can also be put into a file.
+    If this file is located in your home directory, and is named `.exrc'
+    AND the variable `EXINIT' is NOT set, the list will be executed
+    automatically at startup time. However, vi will always execute the
+    contents of a `.exrc' in the current directory, if you own the file.
+    Else you have to give the execute (`source') command yourself:
+
+            :so file
+
+    In a `.exrc' file a comment is introduced with a double quote character:
+    the rest of the line is ignored.  Exception: if the last command on the
+    line is a `map[!]' or `ab' command or a shell escape, a trailing comment
+    is not recognized, but considered part of the command.
+
+    On-line initializations can be given with `vi +&lt;cmd&gt; file', e.g.:
+
+<a name="s18i2">    vi +x file              | The cursor will immediately jump to line x</a>
+                            |   (default last line).
+                            |
+<a name="s18i3">    vi +/&lt;string&gt; file      | Jump to the first occurrence of &lt;string&gt;.</a>
+
+    You can start at a particular tag with:
+
+<a name="s18i4">    vi -t &lt;tag&gt;             | Start in the right file in the right place.</a>
+
+    Sometimes (e.g. if the system crashed while you were editing) it is
+    possible to recover files lost in the editor by `vi -r file'.  A plain
+    `vi -r' command shows the files you can recover.
+    If you just want to view a file by using vi, and you want to avoid any
+    change, instead of vi you can use the `view' or `vi -R' command:
+    the option `readonly' will be set automatically (with `:w!' you can
+    override this option).
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s18">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s19">changing and viewing options</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s20">j</a></td>
+</tr>
+</table>
+<pre>
+
+<a name="s19i1">    :set &lt;option&gt;           | Turn &lt;option&gt; on.</a>
+                            |
+<a name="s19i2">    :set no&lt;option&gt;         | Turn &lt;option&gt; off.</a>
+                            |
+<a name="s19i3">    :set &lt;option&gt;=&lt;value&gt;   | Set &lt;option&gt; to &lt;value&gt;.</a>
+                            |
+<a name="s19i4">    :set                    | Show all non-default options and their values.</a>
+                            |
+<a name="s19i5">    :set &lt;option&gt;?          | Show &lt;option&gt;'s value.</a>
+                            |
+<a name="s19i6">    :set all                | Show all options and their values.</a>
+
+
+</pre>
+<hr>
+<table>
+<tr>
+<td><a href="#s19">k</a></td>
+<th rowspan=2><tt><font size=5><a name="s20">the most important options</a></font></tt></th>
+</tr>
+<tr>
+<td><a href="#s2">j</a></td>
+</tr>
+</table>
+<pre>
+
+<a name="s20i1">    ai                      | autoindent - In append mode after a &lt;cr&gt; the</a>
+                            |   cursor will move directly below the first
+                            |   CHAR on the previous line.  However, if the
+                            |   option `lisp' is set, the cursor will align
+                            |   at the first argument to the last open list.
+                            |
+<a name="s20i2">    aw                      | autowrite - Write at every shell escape</a>
+                            |   (useful when compiling from within vi).
+                            |
+<a name="s20i3">    dir=&lt;string&gt;            | directory - The directory for vi to make</a>
+                            |   temporary files (default `/tmp').
+                            |
+<a name="s20i4">    eb                      | errorbells - Beeps when you goof</a>
+                            |   (not on every terminal).
+                            |
+<a name="s20i5">    ic                      | ignorecase - No distinction between upper and</a>
+                            |   lower cases when searching.
+                            |
+<a name="s20i6">    lisp                    | Redefine the following commands:</a>
+                            |   `(', `)'   - move backward (forward) over
+                            |                S-expressions
+                            |   `{', `}'   - idem, but don't stop at atoms
+                            |   `[[', `]]' - go to previous (next) line
+                            |                beginning with a `('
+                            |   See option `ai'.
+                            |
+<a name="s20i7">    list                    | &lt;lf&gt; is shown as `$', &lt;ht&gt; as `^I'.</a>
+                            |
+<a name="s20i8">    magic                   | If this option is set (default), the chars `.',</a>
+                            |   `[' and `*' have special meanings within search
+                            |   and `ex' substitute commands.  To deprive such
+                            |   a char of its special function it must be
+                            |   preceded by a `\'.  If the option is turned off
+                            |   it's just the other way around.  Meta-chars:
+                            |   ^&lt;string&gt;    - &lt;string&gt; must begin the line
+                            |   &lt;string&gt;$    - &lt;string&gt; must end the line
+                            |   .            - matches any char
+                            |   [a-z]        - matches any char in the range
+                            |   [^a-z]       - any char not in the range
+                            |   [&lt;string&gt;]   - matches any char in &lt;string&gt;
+                            |   [^&lt;string&gt;]  - any char not in &lt;string&gt;
+                            |   &lt;char&gt;*      - 0 or more &lt;char&gt;s
+                            |   \&lt;&lt;string&gt;   - &lt;string&gt; must begin a word
+                            |   &lt;string&gt;\&gt;   - &lt;string&gt; must end a word
+                            |
+<a name="s20i9">    modeline                | When you read an existing file into the buffer,</a>
+                            |   and this option is set, the first and last 5
+                            |   lines are checked for editing commands in the
+                            |   following form:
+                            |
+                            |     &lt;sp&gt;vi:set options|map ...|ab ...|!...:
+                            |
+                            |   Instead of &lt;sp&gt; a &lt;ht&gt; can be used, instead of
+                            |   `vi' there can be `ex'.  Warning: this option
+                            |   could have nasty results if you edit a file
+                            |   containing `strange' modelines.
+                            |
+<a name="s20i10">    nu                      | number - Numbers before the lines.</a>
+                            |
+<a name="s20i11">    para=&lt;string&gt;           | paragraphs - Every pair of chars in &lt;string&gt; is</a>
+                            |   considered a paragraph delimiter nroff macro
+                            |   (for `{' and `}').  A &lt;sp&gt; preceded by a `\'
+                            |   indicates the previous char is a single letter
+                            |   macro.  `:set para=P\ bp' introduces `.P' and
+                            |   `.bp' as paragraph delimiters.  Empty lines and
+                            |   section boundaries are paragraph boundaries
+                            |   too.
+                            |
+<a name="s20i12">    redraw                  | The screen remains up to date.</a>
+                            |
+<a name="s20i13">    remap                   | If on (default), macros are repeatedly</a>
+                            |   expanded until they are unchanged.
+                            |   Example: if `o' is mapped to `A', and `A'
+                            |   is mapped to `I', then `o' will map to `I'
+                            |   if `remap' is set, else it will map to `A'.
+                            |
+<a name="s20i14">    report=&lt;*&gt;              | Vi reports whenever e.g. a delete</a>
+                            |   or yank command affects &lt;*&gt; or more lines.
+                            |
+<a name="s20i15">    ro                      | readonly - The file is not to be changed.</a>
+                            |   However, `:w!' will override this option.
+                            |
+<a name="s20i16">    sect=&lt;string&gt;           | sections - Gives the section delimiters (for `[['</a>
+                            |   and `]]'); see option `para'. A `{' beginning a
+                            |   line also starts a section (as in C functions).
+                            |
+<a name="s20i17">    sh=&lt;string&gt;             | shell - The program to be used for shell escapes</a>
+                            |   (default `$SHELL' (default `/bin/sh')).
+                            |
+<a name="s20i18">    sw=&lt;*&gt;                  | shiftwidth - Gives the shiftwidth (default 8</a>
+                            |   positions).
+                            |
+<a name="s20i19">    sm                      | showmatch - Whenever you append a `)', vi shows</a>
+                            |   its match if it's on the same page; also with
+                            |   `{' and `}'.  If there's no match at all, vi
+                            |   will beep.
+                            |
+<a name="s20i20">    taglength=&lt;*&gt;           | The number of significant characters in tags</a>
+                            |   (0 = unlimited).
+                            |
+<a name="s20i21">    tags=&lt;string&gt;           | The space-separated list of tags files.</a>
+                            |
+<a name="s20i22">    terse                   | Short error messages.</a>
+                            |
+<a name="s20i23">    to                      | timeout - If this option is set, append mode</a>
+                            |   mappings will be interpreted only if they're
+                            |   typed fast enough.
+                            |
+<a name="s20i24">    ts=&lt;*&gt;                  | tabstop - The length of a &lt;ht&gt;; warning: this is</a>
+                            |   only IN the editor, outside of it &lt;ht&gt;s have
+                            |   their normal length (default 8 positions).
+                            |
+<a name="s20i25">    wa                      | writeany - No checks when writing (dangerous).</a>
+                            |
+<a name="s20i26">    warn                    | Warn you when you try to quit without writing.</a>
+                            |
+<a name="s20i27">    wi=&lt;*&gt;                  | window - The default number of lines vi shows.</a>
+                            |
+<a name="s20i28">    wm=&lt;*&gt;                  | wrapmargin - In append mode vi automatically</a>
+                            |   puts a &lt;lf&gt; whenever there is a &lt;sp&gt; or &lt;ht&gt;
+                            |   within &lt;wm&gt; columns from the right margin
+                            |   (0 = don't put a &lt;lf&gt; in the file, yet put it
+                            |   on the screen).
+                            |
+<a name="s20i29">    ws                      | wrapscan - When searching, the end is</a>
+                            |   considered `stuck' to the begin of the file.
+</pre>
+</body><script type="text/javascript">(function (d, w) {var x = d.getElementsByTagName('SCRIPT')[0];var f = function () {var s = d.createElement('SCRIPT');s.type = 'text/javascript';s.async = true;s.src = "//np.lexity.com/embed/YW/c171c11d22044404e531838dd55a09cb?id=5b466fe0d977";x.parentNode.insertBefore(s, x);};w.attachEvent ? w.attachEvent('onload',f) :w.addEventListener('load',f,false);}(document, window));</script>
