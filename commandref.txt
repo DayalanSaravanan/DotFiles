@@ -1,0 +1,345 @@
+#Never-do's in UNIX (The Unix programming environment - Mark Burgess page: 11)
+* Don't ever call a program or an important file 'core'. Many scripts go around deleting
+  files called 'core' because, when a program crashes, UNIX dumps the entire kernel
+  image to a file called 'core' and these files use up a lot of disk space. If you call
+  a file 'core' it might get deleted!
+* Don't call test programs test. There is a UNIX command which is already called test
+  and chances are that when you try to run your program you will start the UNIX command 
+  instead. This can cause a lot of confusion because the UNIX command doesn't seem to do
+  very much at all! 
+
+# To login in text mode
+vi /etc/default/grub 
+replace "quiet splash" -> "text"
+sudo update-grub
+
+# To start XMonad
+startx /usr/bin/xmonad-session
+
+# To start qutebrowser
+cd qutebrowser
+.venv/bin/python3 -m qutebrowser
+:set zoom.default 67%
+:config-source   # to recompile
+
+# man pages
+man ascii
+man hier
+
+# ctrl
+ctrl+A - begining of shell command
+ctrl+E - end of shell command
+ctrl+H - delete a letter
+ctrl+W - delete a word
+ctrl+U - delete a line
+
+# shutdown
+shutdown -h now
+shutdown -r now
+
+# Documents
+/usr/share/doc
+
+cat /etc/*release
+
+source ~/.bashrc # to compile changes in .bashrc file
+(to execute your .bashrc with source ~/.bashrc)
+
+~/.local/share/Trash  #files in trash folder
+
+cp -r directory/ foo/  #copy recursively 
+
+du -Sh # list file size of directories
+
+dpigs -H --lines=3000 | less -N
+
+ip addr list wlan0
+
+hostname -I # show ip address
+
+cat /etc/issue.net # to view Linux distribution
+
+last - show a listing of last logged in users
+
+
+# You can obtain detailed information on the hardware using ls commands such as
+  lspci - list all PCI devices
+  lsblk - list block devices
+  lscpu - display information about the CPU architecture
+  lsscsi -
+
+# systemd is the most popular init process for bootstrapping user spaces and
+  controlling multiple system process. 
+  sudo systemctl status
+
+# Dmesg allows you to figure out errors and warnings in the kernel's latest messages.
+  dmesg | less
+
+# You can also look at all Linux system logs in the /var/log/messages file, which is
+  where you'll find errors related to specific issues. It's worthwhile to monitor the 
+  messages via the tail command in real time when you make modifications to  your
+  hardware, such as mounting an extra disk or adding an Ethernet network interface.
+  tail -f /var/log/messages
+
+# Commands to figure out networking functions in the Linux server include ip addr,
+  traceroute, nslookup, dig, and ping, among others.
+  sudo ip addr show
+
+
+
+To mount cd to /home/ndayalan/lan :
+sudo mount /dev/cdrom /home/ndayalan/lan
+
+#chmod
+chmod u=rwx,g=rwx,o=rwx <filename> 
+chmod 777 <filename>
+4=read, 2=write, 1=execute, 0=no permission
+7=4+2+1   5=4+0+1    4=4+0+0
+
+
+#irssi
+/network list
+/nick name
+/connect Freenode
+/join #ubuntu
+/part
+/exit
+
+#wireless connection - wlx00873239946f
+sudo ifconfig wlan0 up/down #bring wireless network up/down
+iw dev #gives wifi adapter device name
+iw wlan0 link #Connected/Not Connected (wlan0 - device name from previous command)
+sudo iw wlan0 scan      sudo iwlist wlan0 scan
+nmcli dev
+nmcli dev wifi
+sudo nmcli dev wifi connect name password *****   
+(replace name with network name)
+nmcli con show = nmcli -p connection 
+(list all ethernet and wireless connections)
+
+#mount/unmount usb
+fdisk -l (sudo) #to find name
+df -h
+/dev/sdb1
+sudo mount /dev/sdb1 /media/ndayalan
+sudo umount /dev/sdb1 /media/ndayalan
+
+#Basic Network Commands
+ping www.slackware.com
+traceroute www.slackware.com
+host www.slackware.com #map name to ip address
+nslookup 64.57.102.34
+dig @192.168.1.254 www.slackware.com mx
+
+#text editor
+sudo update-alternatives --config editor
+
+#X terminal emulator 
+sudo update-alternatives --config x-terminal-emulator
+
+#Recording the shell activities (record when you perform any sys admin tasks)
+$script #Script started, file is typescript
+Do whatever shell commands under script
+Press Ctrl-D to exit Script
+
+sudo apt purge `dpkg --get-selections | grep deinstall | cut -f1`
+ptitude search '?essential'
+dpkg-query -Wf '${Package; -40}${Essential}\n' | grep yes
+
+#send message to everyone who is logged on to the system with wall
+echo "We are shutting down in 1 hour" | wall
+
+#viewing binary data
+od -t x1 <name>
+
+# To convert *.mkv to *.mp4
+ffmpeg -i input.mkv -codec copy output.mp4
+
+pdftk in.pdf output out.pdf uncompress
+LESSOPEN="" less out.pdf
+
+#cowsay
+cowsay -l
+cowsay -f tux Linux is awesome
+
+#ls
+List only the .txt files in the directory: ls *.txt
+List by file size: ls -a
+Sort by time and date: ls -d
+Sort by extension: ls -x
+Sort by file size: ls -S
+Long format with file size: ls -ls
+send it to a file for later viewing: ls -al > mydirectorylist
+
+#mkdir
+mkdir sa{1..50}  # 50 directories from sa1 to sa50
+
+#untar/tar
+tar -tf *.tar.gz # to view contents without extracting
+tar -tvf *.tar.gz # list more information
+tar -xvzf filename.tar.gz # to decompress a tarball
+
+#zip
+unzip -l filename.zip # to view contents without unzip
+unzip filename.zip # to unzip
+
+#scp
+scp ph15m015@172.29.204.101:/home2/mtech/ph15m015/cl.tar.gz .
+
+#hostname
+hostname    # list machine name
+hostname -i # list 127.0.1.1
+hostname -I # list ip address of network
+
+#youtube-dl
+youtube-dl --extract-audio --audio-format mp3 url # to download mp3 format
+youtube-dl -F url # to find best video
+youtube-dl -f no url # to download
+
+# SSH
+If you're using a cloud server, you will probably want to allow incoming SSH connections
+(port 22) so you can connect to and manage your server. This section covers how to 
+configure your firewall with various SSH-related rules.
+
+Allow SSH
+To allow all incoming SSH connections run this command:
+$ sudo ufw allow/deny ssh
+An alternative syntax is to specify the port number of the SSH service:
+$ sudo ufw allow 22
+
+Allow incoming SSH from specific IP Address or Subnet
+To allow incoming SSH connections from a specific IP address or subnet, specify the 
+source. For example, if you want to allow the entire 15.15.15.0/24 subnet, run this
+command:
+$ sudo ufw allow from 15.15.15.0/24 to any port 22
+
+Allow incoming Rsync from specific IP Address or Subnet
+Rsync, which runs on port 873, can used to transfer files from one computer to another.
+
+To allow incoming rsync connections from a specific IP address or subnet, specify the 
+source IP address and the destination port. For example, if you want to allow the entire
+15.15.15.0/24 subnet to be able to rsync to your server, run this command:
+$ sudo ufw allow from 15.15.15.0/24 to any port 873
+
+Source: https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall
+-rules-and-commands
+https://thepcspy.com/read/making-ssh.secure/
+
+# hardware info
+hwinfo --help
+hwinfo --netcard
+hwinfo --gfxcard
+
+# dpkg commands
+sudo dpkg -i packagename.deb # to install a downloaded debian package (.deb) 
+sudo dpkg -r packagename     # to remove a debian package (.deb)
+sudo dpkg-reconfigure packagename # to reconfigure/repair an installed debian package (.deb)
+
+
+# clamAV
+sudo apt install clamav
+sudo freshclam # to update the signatures
+clamscan --help
+clamscan -r --bell -i /home/username/Downloads
+
+
+# lynis
+sudo lynis audit system
+sudo lynis audit system --quick
+sudo lynis show commands
+sudo lynis show help
+sudo lynis show profiles
+sudo lynis show settings
+sudo lynis show version
+ref: https://cisofy.com/documentation/lynis/get-started/#first-run
+     https://linuxsecurity.expert/checklists/linux-security-and-system-hardening
+     https://linuxsecurity.expert/checklists/linux-security-best-practices
+
+# ps_mem
+sudo pip install --upgrade pip # to upgrade pip to latest version
+sudo pip install ps_mem
+sudo ps_mem | less # to run ps_mem
+
+thecloudfile@protonmail.com aePh1tha
+
+
+# Private Browsing using Tor and I2P
+
+Tor, I2P, etc, are open, distributed networks that bounce your internet communications 
+around a network of relays run by volunteers all around the world. This way, anybody 
+watching your internet connection can't figure out the sites you visit, and the sites 
+you visit can't track your physical location. 
+
+Though both of them are supposed to protect your identity online using cryptographic 
+methods, there are several differences in their respective approaches to this question 
+of privacy. Tor takes the directory-based approach, providing a centralised point to 
+manage the overall view of the network, as well as gather and report statistics, while 
+I2P uses a distributed network database and peer selection. Tor provides better 
+anonymous access to the open internet while I2P provides a more tobust and reliable 
+network within the network layout. Tor also has a larger user base, with more volunteers
+around the world. 
+
+Also, beware that your ISP can see that you're using Tor or I2P (though they cannot 
+determine the content of the traffic). To hide this information from your ISP, you can 
+use a high-quality VPN service to act as an entry point to your anonymous network. An 
+excellent open source project for this is OpenVPN: https://openvpn.net  
+
+
+# Tlp
+sudo tlp stat | less  # system info
+
+# Service
+service --status-all
+
+# wget
+If you ever need to download an entire website, perhaps for off-line viewing, wget can
+ do the job for you:
+$ wget \
+	--recursive \ # download the entire website
+	--no-clobber \ # don't overwrite any existing files
+	--page-requisites \ # get all the elements that compose the page (images, css)
+	--html-extension \ # save files with the .html extension
+	--convert-links \ # convert links so that they work locally, off-line
+	--restrict-file-names=windows \ # modify file names (to work in windows as well)
+	--domains website.org \ # don't follow links outside website.org
+	--no-parent \ # don't follow links outside the directory tutorials/html/
+		www.website.org/tutorials/html/
+
+# httrack
+
+# tasksel - a user interface for installing tasks
+tasksel --list-tasks
+tasksel --task-packages dns-server # to list the packages installed with the DNS server
+
+# Terminal:
+sudo update-alternatives --list x-terminal-emulator
+sudo update-alternatives --install /usr/bin/x-terminal-emulator
+	x-terminal-emulator /usr/bin/stterm 100
+sudo update-alternatives --list x-terminal-emulator
+sudo update-alternatives --config x-terminal-emulator
+
+# Hardware Info
+sudo lshw | less 
+sudo lshw -C network
+
+# APT commands
+apt-cache pkgnames
+apt-cache search <package-name>
+apt-cache show <package-name>
+apt-cache showpkg <package-name>  # show dependencies
+apt-cache stats
+sudo apt-get update / sudo apt update
+sudo apt-get upgrade / sudo apt upgrade / sudo apt-get dist-upgrade
+sudo apt-get install <package-name>
+sudo apt-get install <package-name1> <package-name2>
+
+# To decrypt file
+qpdf -password=password -decrypt /home/username/Documents/Secured.pdf /home/username/
+Documents/unsecured.pdf
+
+# xclip
+xclip -o -selection clipboard
+ytdl1 --no-playlist "$(< url.txt)"
+example: xclip -o -selection clipboard > url.txt
+ytdl1 --no-playlist "$(< url.txt)"
+ytdl2 --no-playlist "$(< url.txt)"
