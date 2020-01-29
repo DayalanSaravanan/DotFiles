@@ -1,4 +1,5 @@
 Pythontic.com
+Pythonic Permutations
 Scipy Lecture Notes - https://scipy-lectures.org/
 Book: Python Scripting for Computational Science 
 https://southampton.ac.uk/~fangohr/training/python/pdfs/
@@ -6,6 +7,10 @@ PLOS - Computational Biology
 https://www.physics.ohio-state.edu/undergrad/greStuff/
 
 which python3
+
+import numpy as np
+dir(np)
+help(np.zeros)
 
 chmod u+x file.py 
 ./file.py
@@ -27,6 +32,7 @@ Index (PyPI))
 %f     floating pointer
 %o     octal number
 %x     hexadecimal number
+%e     scientific notation
 
 # install
 sudo python3 -m pip install pandas
@@ -36,6 +42,10 @@ sudo python3 -m pip install sympy
 sudo python3 -m pip install matplotlib
 sudo python3 -m pip install fmcw
 sudo python3 -m pip install pylint
+sudo python3 -m pip install bokeh
+sudo python3 -m pip install keras
+sudo python3 -m pip install theano
+sudo python3 -m pip install tensorflow
 
 # upgrade
 sudo python3 -m pip install --upgrade pip
@@ -76,8 +86,17 @@ python3 -c "import sklearn"
 # pylint
 sudo pylint file.py
 
-time = [time for time in np.linspace(0, 40, 10) for i in range(2)]
-time = [np.linspace(0, 40, 10) for i in range(2)]
+time = [time for time in np.linspace(0, 40, 10) for n in range(2)]
+print(time)
+[0.0, 0.0, ... 40.0, 40.0]
+
+time = [np.linspace(0, 40, 10) for n in range(2)]
+print(time)
+[array([0., ... 40.]), array([0., ... 40.])]
+
+time = 2*[np.linspace(0, 40, 10)] # result is same as above
+print(time)
+[array([0., ... 40.]), array([0., ... 40.])]
 
 # to check the architecture of python installed
 import platform, sys
@@ -507,3 +526,101 @@ print(filled_list)
 filled_dict = (a:a**2 for a in range(5)]
 print(filled_dict)
 >>> (0: 0, 1: 1, 2: 4, 3: 9, 4: 16)
+
+# zip
+L1 = [1,2,3,4]
+L2 = [5,6,7,8]
+In: list(zip(L1,L2))
+Out: [(1,5), (2,6), (3,7), (4,8)]
+In: for (x,y) in zip(L1,L2):
+	print(x, y, '--', x+y)
+Out: 1 5 -- 6
+     ........
+     4 8 -- 12
+
+# Python Lambda Functions
+def average(x, y):
+	return (x+y)/2
+avg = average(2, 5)
+average = lambda x, y: (x+y)/2
+
+var = [1, 5, -2, 3, -7, 4]
+sorted_var = sorted(var)
+
+Ref: https://www.pythonforthelab.com/blog/intro-to-python-lambda-functions/ 
+
+# Beyond the for-loop
+
+integers = range(0, 10)
+even = []
+for i in integers:
+	if i%2 == 0:
+		even.append(i)
+
+>>> even
+>>> [0, 2, 4, 6, 8]
+
+integers = range(0, 10)
+even = filter(lambda x: x%2 == 0, integers)
+
+integers = range(0, 10)
+def is_even(x):
+	return x%2 == 0
+
+even = filter(is_even, integers)
+
+integers = range(0, 10)
+even = [x for x in integers if x%2 == 0]
+
+# Map
+integers = range(0, 10)
+list(map(lambda x: x*x, integers))
+
+>>> [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+integers = range(0, 10)
+[x*x for x in integers]
+
+>>> [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+# Reduce
+from functools import reduce
+
+integers = range(1, 10)
+reduce(lambda x, y: x*y, integers)
+
+>>> 362880
+
+# Sum
+integers = range(1, 10)
+sum(integers)
+
+>>> 45
+
+# Any and All
+
+any([False, True, False])
+>>>True
+
+all([False, True, False])
+>>> False
+
+To check for even numbers in a list:
+
+integers = range(1, 10)
+any(x%2 == 0 for x in integers)
+>>> True
+
+all(x%2 == 0 for x in integers)
+>>> False
+
+# List Methods
+list.append(x)
+list.extend(iter)
+list.insert(i, x)
+list.remove(x)
+list.clear()
+list.copy()
+list.reverse()
+list.pop([i])
+list.sort()
