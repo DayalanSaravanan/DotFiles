@@ -1,0 +1,23 @@
+Relational Database Management System - RDBMS
+
+mysql -u user -p dbname
+
+# sqlite - use SQL without a database server
+
+# Relational Database Concepts
+A database server can contain many databases
+Databases are collections of tables
+Tables are two-dimensional with rows (observations) and columns (variables)
+Limited Mathematical and summary operations available
+Very good at combining information from several tables
+
+SHOW DATABASES;
+SHOW TABLES IN database;
+SHOW COLUMNS IN table;
+DESCRIBE table; # shows the columns and their types
+
+# Variable Types
+SQL supports a very large number of different formats for internal storage
+of information.
+Numeric - INTEGER, SMALLINT, BIGINT
+	  NUMERIC(w,d), DECIMAL(w,d) - numbers with width w and d decimal places
