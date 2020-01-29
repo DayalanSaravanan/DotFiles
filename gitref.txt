@@ -1,0 +1,73 @@
+Git User Manual
+file:/usr/share/doc/git/html/user-manual.html
+
+man gittutorial, gittutorial-2, giteveryday, gitcore-tutorial
+
+Git global setup:
+git config --global user.name "D.Saravanan"
+git config --global user.email "dayalsaravanan@gmail.com"
+
+git config --list
+
+git help config
+man git-config
+
+Create a new repository:
+git clone https://gitlab.com/dsaravanan/Books.git
+cd Books
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
+
+Existing folder:
+cd existing folder
+git init
+git remote add origin https://gitlab.com/dsaravanan/Books.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+
+Existing Git repository:
+cd existing repo
+git remote rename origin old-origin
+git remote add origin https://gitlab.com/dsaravanan/Books.git
+git push -u origin --all
+git push -u origin --tags
+
+
+# git pull example (git pull does a git fetch followed by a git merge)
+git init .
+git remote add origin https://gitlab.com/dsaravanan/dotfiles.git
+git pull origin master # download all files and commits and overrides all files and 
+commits in the existing repository
+git add <filename>
+git commit -m <commit message>
+git push -u origin master
+git status
+git log | less / git log --stat | less
+
+git branch
+git branch <localbranchname>
+
+git remote -v # list the web address of the repository
+
+git rev-list @ -- file_name  # list commit message of that particular file
+                               and No. of git commits that touched the file
+
+for file in *.pdf; do echo -n "$file   "; git rev-list @ -- $file | wc -l; done
+
+
+Note: read man page of gittutorial
+
+git pull origin master # to update the repository of qutebrowser, lynis and sxiv
+git checkout <filename> 
+git reflog # manage reflog information
+git diff hash1 hash2 
+
+# to update
+git status # to check the status of the remote repository
+git pull origin master # to update the repository
+
+# Delete the repository in Github
+https://help.github.com/en/github/administering-a-repository/deleting-a-repository
