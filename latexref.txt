@@ -1,0 +1,20 @@
+\Huge
+\huge
+\LARGE
+\Large
+\large
+\normalsize (default)
+\small
+\footnotesize
+\scriptsize
+\tiny
+
+http://www.emerson.emory.edu/services/latex/latex_toc.html
+https://texblog.org/2014/04/09/whitespace-in-math-mode/
+
+\documentclass[11pt,twoside,a4paper]{article}
+
+https://en.wikibooks.org/wiki/LaTeX/Document_Structure
+
+TEX - http://www.ctan.org
+LATEX - http://www.latex-project.org
