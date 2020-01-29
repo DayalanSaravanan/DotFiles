@@ -1,0 +1,72 @@
+# OS
+Linux
+BSD
+
+# boot
+libreboot
+
+# shell
+zsh
+bash
+
+# terminal
+xterm
+st
+
+# web browser
+qutebrowser
+surf
+w3m
+
+# window manager
+dwm
+Xmonad
+
+# text editing
+Vi
+
+# music player
+cmus
+
+# video player
+mpv
+
+# image editing
+rawtherapee
+darktable
+
+# tools
+suckless tools
+
+# irc
+irssi
+
+# image viewer
+sxiv
+
+# pdf-reader
+zathura
+
+# word processing
+LaTeX
+Markdown
+
+# programming
+C
+Python
+Lisp
+Haskell
+
+# system administration
+fdupes
+powertop
+
+# automate
+at
+anacron
+cron
+
+# games
+an
+bsdgames
+sudoku
