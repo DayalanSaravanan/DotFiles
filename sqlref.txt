@@ -2,6 +2,24 @@ Relational Database Management System - RDBMS
 
 mysql -u user -p dbname
 
+select version(), current_date;
+
+# Creating a Database and Tables
+CREATE DATABASE bookstore;
+SHOW DATABASES;
+USE bookstore
+CREATE TABLE books (book_id INT,
+	title VARCHAR(50),
+	author VARCHAR(50) );
+
+DESCRIBE books;
+
+# Analyzing and Manipulating Data
+SELECT COUNT(*)
+	FROM books
+	JOIN authors USING(author_id)
+	WHERE author_list = 'Tolstoy';
+
 # sqlite - use SQL without a database server
 
 # Relational Database Concepts
@@ -21,3 +39,80 @@ SQL supports a very large number of different formats for internal storage
 of information.
 Numeric - INTEGER, SMALLINT, BIGINT
 	  NUMERIC(w,d), DECIMAL(w,d) - numbers with width w and d decimal places
+
+
+show databases;
+use <databasename>;
+show tables in <databasename>;
+show columns in <tablename>; is equvalent to "describe <tablename>;"
+show rows in <tablename>; # results in error
+
+create table childrens(id char(6),
+			race smallint,
+			age decimal(6,3),
+			height decimal(7,3),
+			weight decimal(7,3),
+			sex smallint);
+
+insert into childrens values(100011, 2, 10.346, 148.5, 38.95, 1);
+
+We can automate the process using the LOAD DATA command:
+load data infile 'childrens.tab'
+	into table childrens
+	fields terminated by '\t'; 
+This will read an entire tab-separated file into the database in one command
+
+select * from childrens; # to see all of the data in table childrens
+
+
+# Created Database: library and Table: booklist
+Reference: MYSQL_in_a_Nutshell.pdf
+
+create database library;
+use library;
+
+create table booklist(
+subject varchar(50),
+title varchar(75),
+author varchar(50));
+
+describe booklist;  # similar to show columns in booklist;
+
+alter table booklist
+change column subject book_id int auto_increment primary key,
+change column title subject varchar(20),
+change column author title varchar(75),
+add column author varchar(50),
+add column edition varchar(20);
+
+show databases;
+show tables;
+
+insert into booklist
+(subject, title, author, edition)
+values('Linux', 'Introduction to Linux', 'Machtelt Garrels', '1.27 Edition');
+
+select * from booklist;
+
+select book_id, title, author, edition
+from booklist
+where subject = 'Linux';
+
+select count(*)
+from booklist
+where subject = 'Linux';
+
+update booklist
+set edition = '1 Edition'
+where book_id = '2';
+
+delete from booklist
+where author = ' Michael Stutz';
+
+# database schema
+
+show columns from clients like 'c%i%';
+
+alter table clients
+change column city client_city varchar(100) character set 'latin2',
+modify column client_state char(4) after client_city;
