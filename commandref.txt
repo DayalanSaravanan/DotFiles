@@ -19,6 +19,32 @@ adding rw init=/bin/bash to boot parameters will open a full root session for an
 happens to push the power button on your PC. If you think you might need this kind of 
 access, I would advise you to create a secure BIOS or GRUB password to protect yourself.
 
+echo $LANG
+
+name=newton
+echo $name   # $ symbol is used before a variable in echo command
+newton
+
+ulimit # get and set user limits
+
+# command and argument
+cal 2020  # command: cal, argument: 2020
+* Passing an argument to the command alters its behavior.
+* Some commands may require obligatory arguments and will return an error message if 
+  they are missing. For example, the command to copy a file needs two arguments:
+  what file to copy, and where to copy it.
+* All commands can be modified using options that are specific to each command.
+cal -j  # use option -j to display Julian calendar
+
+leave 2005 # to remind yourself to leave at 08:05 pm 
+
+mkdir Directory; cd Directory; touch 1.txt 2.txt 3.c
+echo *.txt
+1.txt 2.txt
+echo *
+1.txt 2.txt 3.c
+rm -rf Directory
+
 mkdir -p dir1/dir2/dir3  # will create directories and its parent directories
 rm -r dir1 # recursively deletes the contents of dir1 and its subdirectories
 
@@ -153,6 +179,31 @@ ctrl+E - end of shell command
 ctrl+H - delete a letter
 ctrl+W - delete a word
 ctrl+U - delete a line
+ctrl+P - scrolls through previous command
+ctrl+N - scrolls through next command
+ctrl+R - searches for commands you've already typed
+
+# alt
+alt+B - backward
+alt+F - forward
+alt+U - uppercase
+alt+L - lowercase
+alt+C - capitalizes letter where cursor is and moves to end of word
+
+# Special key strokes
+ctrl-U		erase line before cursor
+ctrl-H		erase a character before cursor
+ctrl-D		terminate input (exit shell if you are using shell)
+ctrl-C		terminate a running program
+ctrl-Z		temporarily stop program by moving it to the background job
+ctrl-S		halt output to screen
+ctrl-Q 		reactivate output to screen
+ctrl-Alt-Del    reboot/halt the system, see inittab(5)
+Left-Alt-Key    meta-key for Emacs and the similar UI
+Up-arrow	start command history search under bash
+ctrl-R		start incremental command history search under bash
+Tab		complete input of the filename to the command line under bash
+ctrl-V Tab	input Tab without expansion to the command line under bash
 
 # shutdown
 shutdown -h now
@@ -296,6 +347,13 @@ chmod u=rwx,g=rwx,o=rwx <filename>
 chmod 777 <filename>
 4=read, 2=write, 1=execute, 0=no permission
 7=4+2+1   5=4+0+1    4=4+0+0
+
+chmod 600 <filename>   # make an existing file "<filename>" to be non-readable and
+                         non-writable by the other people (non-executable for all)
+chmod 644 <filename>   # make an existing file "<filename>" to be readable but non-
+			 writable by the other people (non-executable for all)
+chmod 755 <filename>   # make an existing file "<filename>" to be readable but non-
+			 writable by the other people (executable for all)
 
 u user     + to add a permission                      r read
 g group    - to remove a permission                   w write
@@ -652,6 +710,13 @@ $ wget \
 	--no-parent \ # don't follow links outside the directory tutorials/html/
 		www.website.org/tutorials/html/
 
+wget address
+wget --http-user=USER --http-password=PASSWORD address
+
+# curl
+curl web-address > file-source
+example: curl https://address.html > address.html
+
 # trickle
 trickle -d 1024 wget -c 
    https://archive.org/download/CharlieChaplin/Chaplin_512kb.mp4 
@@ -830,6 +895,72 @@ w3m -post - http://example.com/form.php <<<'a=0&b=1' # Upload data for a URL usi
 ~/.w3m/passwd           # password and username file
 ~/.w3m/pre_form         # contains predefined values to fill recurrent HTML forms
 http://w3m.sourceforge.net
+
+Translate html to text
+cat index.html | w3m -dump -T text/html > index.txt
+
+Useful command line options
+-s       squeeze multiple blank lines
+-cookie  
+-no-proxy
+-post FILE
+
+Moving around
+H            show runtime options
+K,J          scroll one line
+.,,          shift screen by one column
+z            center current line
+[,]          go to first/last link
+TAB          move to next link
+C-u,ESC-TAB  move to previous link
+C-m          popup link list menu and move cursor to selected link
+C-l          popul link list menu and go to selected link
+(,)          cancel/redo last cursor movement
+
+Hyperlinks
+C-t          open link in new tab
+a            save link
+c            peek current URL
+u            peek link URL
+I            view image
+;            mark current word as anchor (link navigation will apply)
+=            view info of current document
+F            render frame
+L            show all links and images
+
+Buffers
+B            back
+v            view HTML source
+s	     popup buffer selection menu
+S            save buffer to file
+E	     edit current document (local file)
+R            reload
+
+Tabs
+T            open new tab
+C-q          close current tab
+{,}          move to next/previous tab
+ESC-t        popup tab selection menu
+
+Bookmarks
+ESC-b        view bookmark
+ESC-a        add current page to bookmark
+
+Search
+/,?          search forward/backward
+C-s,C-r      incremental search forward/backward
+
+Marks
+C-@          set/unset mark
+ESC-n,ESC-p  move to next/preious mark
+
+Misc
+o            option setting panel
+C-k          view cookie list
+C-h          view history
+!            execute shell command
+C-z          stop loading document
+Q            quit without confirmation
 
 # system information viewers
 dmidecode - it reports information about your system's hardware as described in your
@@ -1565,3 +1696,124 @@ service <service-name> start # start a service
 service <service-name> stop  # stop a service
 service <service-name> restart # restart a service
 service <service-name> status  # check the status of a service 
+
+# Format USB Drive
+Step 1: Insert USB and Identify Volume
+Insert a USB drive into your system and identify your USB drive correctly. This is the
+step you need to take care, because you may format the wrong disk if not correctly
+identify your disk.
+$ df -h
+Step 2: Format USB Drive in Linux
+Whenever we attach a USB drive, it automatically mounted to the system. We can not 
+format any disk on Linux systems which are already mounted. So first un-mount /dev/sdc1
+USB drive on your system.
+$ sudo umount /dev/sdc1
+Step 3: Format with vFat file system  $ sudo mkfs.vfat /dev/sdc1
+        Format with NTFS file system  $ sudo mkfs.ntfs /dev/sdc1
+        Format with EXT4 file system  $ sudo mkfs.ext4 /dev/sdc1
+
+
+shei4eiT/hei4eiT
+
+# Translate html to text
+cat index.html | w3m -dump -T text/html > index.txt
+
+# Permissions and their likely uses  (chmod 700 /home/user/file)
+Permission_String      Octal_Code   Meaning
+rwxrwxrwx              777          Read, write, and execute permissions for all users.
+rwxr-xr-x              755          Read and execute permission for all users. The file
+                                    owner also has write permission.
+rwxr-x---              750          Read and execute permission for the owner and group.
+				    The file's owner also has write permission. Users
+				    who are not the file's owner or members of the group
+                                    have no access to the file.
+rwx------              700          Read, write, and execute permissions for the file's
+                                    owner only; all others have no access.
+rw-rw-rw-              666          Read and write permissions for all users. No execute
+                                    permissions to anybody.
+rw-rw-r--              664          Read and write permissions to the owner and group. 
+				    Read-only permission to all others.
+rw-rw----              660          Read and write permissions to the woner and group. 
+                                    No world permissions.
+rw-r--r--              644          Read and write permissions to the owner. Read-only
+                                    permission to all others.
+rw-r-----              640          Read and write permissions to the owner, and read-
+                                    only permission to the group. No permission to other
+rw-------              600          Read and write permissions to the owner. No permiss-
+                                    ion to anybody else.
+r--------              400          Read permission to the owner. No permission to any-
+                                    body else.
+
+# netstat
+netstat -p > net_connections.txt   # redirect stdoutput to file
+netstat -p 2> error_messages.txt   # redirect stderror to file 
+netstat -p &> net_connections.txt  # redirect stdoutput and stderror to file
+
+# Common Environment variables and their meanings
+Variable_Name     Explanation
+$USER             This is your current username. It's a variable that's maintained by 
+                  the system.
+$SHELL            This variable holds the path to the current command shell.
+$PWD              This is the present working directory. This environment variable is
+                  maintained by the system. Programs may use it to search for files
+                  when you don't provide a complete pathname.
+$HOSTNAME         This is the current TCP/IP hostname of the computer.
+$PATH             This is an unusually important environment variable. It sets the path
+                  for a session; the path is a coon-delimited list of directories in 
+                  which Linux searches for executable programs when you type a program
+		  name. For instance, if PATH is /bin:/usr/bin and you type ls, Linux
+                  looks for an executable program called ls in /bin and then in /usr/bin
+	          If the command you type isn't on the path, Linux responds with a comm-
+                  and not found error. The $PATH variable is typically built up in seve-
+                  ral configuration files, such as /etc/profile and the .bashrc file in 
+                  the user's home directory.
+$HOME             This variable points to your home directory. Some programs use it to 
+                  help them look for configuration files or as a default location in
+		  which to store files.
+$LD_LIBRARY_PATH  A few programs use this environment variable to indicate directories
+                  in which library files may be found. It wroks much like PATH.
+$PS1              This is the default prompt in bash. It generally includes variables of
+                  its own, such as \u (for the username), \h (for the hostname), and \#
+                  (for the current working directory). This value is frequently set in
+	          /etc/profile, but it is often overridden by users.
+$TERM             This variable is the name of the current terminal type. 
+$DISPLAY          This variable identifies the display used by X. It's usually :0.0, 
+                  which means the first (numbered from 0) display on the current comput-
+		  er. When you use X in a networked environment, though, this value mey
+                  be preceded by the name of the computer at which you're sitting, as in
+                  machine4.example.com:0.0. This value is set automatically when you 
+	          log in, but you may change it if necessary. You can run multiple X 
+                  sessions on one computer, in which case each one gets a different
+                  DISPLAY number - for instance, :0.0 for the first session and :1.0 for
+                  the second.
+$EDITOR           Some programs launch the program pointed to by this environment vari-
+                  able when they need to call a text editor for you to use.
+
+# Verify that the hash matches the downloaded image:
+You need to verify that the hash matches the downloaded image, and then verify that the
+hash was signed by an official Debian key - as explained in (https://linuxconfig.org/how
+-to-verify-an-authenticity-of-downloaded-debian-iso-images).
+1. Download your CD image, a SHA 512 hash, and the hash signature. (debian.org)
+2. Verify that the hash matches the image
+$ sha512sum debian-8.3.0-i386-netinst.iso > my_hash.txt
+$ diff -q my_hash.txt SHA512SUMS
+3. Verify the hash is properly signed. You'll probably have to do it twice: once to get
+the key ID, and again after you have downloaded the public key.
+$ gpg --verify SHA512SUMS.sign SHA512SUMS
+gpg: Signature made Mon 25 Jan 2016 05:00:46 AEDT using RSA key ID 6294BE9B
+$ gpg --keyserver keyring.debian.org --recv 6294B#9B
+$ gpg --verify SHA512SUMS.sign SHA512SUMS
+4. Verify that the key fingerprint (the last printed line) is legitimate. Ideally, you
+should do this via a web of trust (https://www.gnupg.org/gph/en/manual/x547.html). 
+However you can check the key fingerprint against the keys listed on Debian's website
+(https://www.debian.org/CD/verify).
+Ref: https://unix.stackexchange.com/questions/138603/how-to-verify-debian-iso-integrity
+
+# Check the Hard Disk Serial Number in Linux
+df -h # to know the device names of your disks
+hwinfo # displays the hard drive model and vendor but not serial number
+lshw   # displays the list of hardware installed on your machine
+lshw -class disk # displays the serial number
+smartctl # is a tool part of the smartmontools package (sudo apt install smartmontools)
+smartctl -i /dev/sda # displays the serial number
+hdparm -i /dev/sda   # displays the serial number
