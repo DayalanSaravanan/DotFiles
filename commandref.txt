@@ -423,6 +423,7 @@ chgrp -hR ndayalan file/Directory # Change the group of file/Dire and subfiles
 Note: refer man chgrp (Examples section)
 
 # irssi - https://freenode.net/kb/answer/registration
+https://irssi.org/documentation/startup/
 Register your IRC nick - /msg NickServ REGISTER password youremail@example.com
 Logging in - /connect chat.freenode.net 6667 account_name:password
 /network list
@@ -1580,7 +1581,48 @@ sudo chage -m 5 -M 30 mark # to force users to change password (no < 5 but no > 
 sudo chage -W 7 mark  # to send Mark a warning seven days before his deadline
 sudo chage --list mark  # to list Mark's current settings
 Note: Referance Practical_LPIC-1.pdf (page:102)
-	
+
+# user and permissions
+## create a user called ashley
+useradd --create-home ashley
+## create a user in groups "users" and "dev"
+useradd --create-home --groups users dev ashley 
+## create a user with the UID 1337
+useradd --create-home --uid 1337 ashley
+## create or change a user password
+passwd ashley
+<enter password>
+## add user to a group "coder"
+usermod --append --groups coder ashley
+## remove a user from a group "coder"
+gpasswd --delete ashley coder
+## delete a user from the system
+userdel ashley
+## delete a user and all user data from the system
+userdel --remove ashley
+## show which users are currently logged in
+w
+## show login history
+last
+## set default permission of files to 644
+echo "umask 022" >> /etc/profile
+## set default permission of files to 664
+echo "umask 002" >> /etc/profile
+## change ownership of a file "example.txt" to user "ashley"
+chown ashley:users example.txt
+## give read permission to user, group, and others
+chmod ugo+r example.txt
+## give write permissions to user and group
+chmod ug+w example.txt
+## remove write permission to a file for group members
+chmod g-w example.txt
+## make a file executable
+chmod +x example.txt
+## log in as a different user
+su - ashley
+## run a command "ls" as a different user
+su - ashley --command ls
+
 # vagrant
 
 # cfdisk
@@ -1817,3 +1859,7 @@ lshw -class disk # displays the serial number
 smartctl # is a tool part of the smartmontools package (sudo apt install smartmontools)
 smartctl -i /dev/sda # displays the serial number
 hdparm -i /dev/sda   # displays the serial number
+
+# Hex codes
+Hex: #101718  RGBA(16,23,24,1)
+HeX: #1f2a2e  RGBA(31,42,46,1)
