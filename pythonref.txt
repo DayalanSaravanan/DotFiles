@@ -2,11 +2,93 @@ Pythontic.com
 Pythonic Permutations
 Scipy Lecture Notes - https://scipy-lectures.org/
 Book: Python Scripting for Computational Science 
+Book: Think Python
 https://southampton.ac.uk/~fangohr/training/python/pdfs/
 PLOS - Computational Biology
 https://www.physics.ohio-state.edu/undergrad/greStuff/
 
-which python3
+Creating a virtual environment:
+In Python 3.6+, the recommended way to create a virtual environment is to run:
+$ python3 -m venv /path/to/new/virtual/environment
+Make sure that python3 resolves to whichever version of python3 you'd like to bind to
+your virtual environment. For example, to create a new virtual environment for CS41
+named cs41-env in your home directory, you could run:
+$ python3 -m venv ~/cs41-env
+
+Activation and Deactivation:
+To activate a virtual environment on macOS or Linux running bash or zsh, source the
+following path:
+$ source ~/cs41-env/bin/activate 
+https://github.com/stanfordpython/python-handouts/blob/master/virtual-environment.md
+
+which python3      # installation search path of python3
+/usr/bin/python3   # in Ubuntu 16.04
+
+When a script file is used, it is sometimes useful to be able to run the script and 
+enter interactive mode afterwards. This can be done by passing -i before the script.
+>>> python3 -i script.py
+
+!pydoc numpy       # documentation for numpy in ipython
+
+Example:
+#!/usr/bin/env python3
+from math import sin
+import sys
+x = float(sys.argv[1])
+print('sin({0}) = {1}'.format(x, sin(x)))
+print('sin({x:q}) = {s:.3f}'.format(x=x, s=sin(x)))
+
+# curly brackets are place holders - {0}, {1}
+
+Print Statements:
+x = 0.8
+print("The value of x is", x)
+print("sin(%f) = %f" %(x, sin(x)))
+print("sin(%.2f) = %.2f" %(x, sin(x)))
+print("sin({0}) = {1}".format(x, sin(x)))
+print("sin({x:q}) = {s:.3f}".format(x=x, s=sin(x)))
+
+Complex Numbers:
+a = 1+2j
+b = 3-5j
+print(a*b)
+
+Logrithm:
+from math import log10
+log10(5)
+
+Special characters in strings:
+s = "\"This is a quote\" and \n here comes a backslash: \\"
+print(s)
+"This is a quote" and
+here comes a backslash: \
+
+String concatenation:
+Strings can be glued together with the + and the * operators 
+"hello "*3 + "world"
+'hello hello hello world'
+quote = 'I will not eat chips all day"
+(quote + ", ")*10 + quote
+"1"*10 = 1111111111
+int("1")*10 = 10
+
+Slicing:
+You can extract a sub-string with the [start:end] slicing notation:
+quote[2:6]
+'will'
+If the start argument is left out, the substring will start from the first charachter:
+quote[:6] # I will
+quote[7:] # not eat chips all day
+Negative indices can be used to index "from the right":
+| c | h | i | p | s |
+0   1   2   3   4   5
+-5 -4  -3  -2  -1   0
+
+'chips'[1:-2]
+'hi'
+
+Python strings ar
+   
 
 import numpy as np
 dir(np)
@@ -40,12 +122,16 @@ sudo python3 -m pip install numpy
 sudo python3 -m pip install scipy
 sudo python3 -m pip install sympy
 sudo python3 -m pip install matplotlib
+sudo python3 -m pip install matplotlib-venn
 sudo python3 -m pip install fmcw
 sudo python3 -m pip install pylint
 sudo python3 -m pip install bokeh
 sudo python3 -m pip install keras
 sudo python3 -m pip install theano
 sudo python3 -m pip install tensorflow
+sudo python3 -m pip install num2word
+sudo python3 -m pip install num2words
+sudo python3 -m pip install seaborn
 
 # upgrade
 sudo python3 -m pip install --upgrade pip
@@ -624,3 +710,29 @@ list.copy()
 list.reverse()
 list.pop([i])
 list.sort()
+
+# format text
+greeting = 'Hello'
+name = 'Raman'
+
+message = '{}, {}. Welcome!'.format(greeting, name)
+message = f'{greeting), {name}. Welcome!'
+print(message)
+
+$ Hello, Raman. Welcome!
+
+message = f'{greeting}, {name.upper()}. Welcome!'
+print(message)
+
+$ Hello, RAMAN. Welcome!
+
+print(dir(name))        # dir function
+print(help(str))        # help function
+print(help(str.lower))  # help function
+
+Creating a vector:
+vector_row = np.array([1, 2, 3])
+vector_col = np.array([[1], [2]. [3]])
+Creating a matrix:
+matrix = np.array([[1,2], [1,2], [1,2]])
+matrix_obj = np.mat([[1,2], [1,2], [1,2]])
