@@ -6,6 +6,7 @@ Book: Think Python
 https://southampton.ac.uk/~fangohr/training/python/pdfs/
 PLOS - Computational Biology
 https://www.physics.ohio-state.edu/undergrad/greStuff/
+https://docs.python.org/3/tutorial/venv.html # tutorial for venv
 
 Creating a virtual environment:
 In Python 3.6+, the recommended way to create a virtual environment is to run:
@@ -20,6 +21,7 @@ To activate a virtual environment on macOS or Linux running bash or zsh, source 
 following path:
 $ source ~/cs41-env/bin/activate 
 https://github.com/stanfordpython/python-handouts/blob/master/virtual-environment.md
+$ deactivate # deactivate a virtual environment
 
 which python3      # installation search path of python3
 /usr/bin/python3   # in Ubuntu 16.04
@@ -116,38 +118,49 @@ Index (PyPI))
 %x     hexadecimal number
 %e     scientific notation
 
-# install
-sudo python3 -m pip install pandas
-sudo python3 -m pip install numpy
-sudo python3 -m pip install scipy
-sudo python3 -m pip install sympy
-sudo python3 -m pip install matplotlib
-sudo python3 -m pip install matplotlib-venn
-sudo python3 -m pip install fmcw
-sudo python3 -m pip install pylint
-sudo python3 -m pip install bokeh
-sudo python3 -m pip install keras
-sudo python3 -m pip install theano
-sudo python3 -m pip install tensorflow
-sudo python3 -m pip install num2word
-sudo python3 -m pip install num2words
-sudo python3 -m pip install seaborn
+# system useage
+python3 -m pip install <pkgname>             # install
+python3 -m pip install --upgrade <pkgname>   # upgrade
+python3 -m pip search <pkgname>              # search
+python3 -m pip list | less -N                # list
+python3 -m pip help | less -N                # help 
+pip3 --version                               # version 
 
-# upgrade
-sudo python3 -m pip install --upgrade pip
-sudo python3 -m pip install --upgrade pylint
-sudo python3 -m pip install --upgrade matplotlib
-sudo python3 -m pip install --upgrade youtube-dl
+# virtual environment using venv
 
-# search
-sudo python3 -m pip search packagename
+## install
+pip install wheel
+pip install numpy
+pip install scipy
+pip install sympy
+pip install matplotlib
+pip install matplotlib-venn
+pip install seaborn
+pip install bokeh
+pip install pandas
+pip install pylint
+pip install keras
+pip install theano
+pip install tensorflow
+pip install num2word
+pip install num2words
 
-# list
-sudo python3 -m pip list | less -N
+## upgrade
+pip install --upgrade pip
+pip install --upgrade <pkgname>
 
-# help
-sudo python3 -m pip help | less 
+## search
+pip search packagename
+
+## list
+pip list | less -N
+
+## help
+pip help | less 
 (To see a list of all commands type)
+
+## version
+pip --version
 
 # pip
 Usage: sudo python3 -m pip <command> [options]
@@ -170,7 +183,7 @@ python3 -c "import numpy"
 python3 -c "import sklearn"
 
 # pylint
-sudo pylint file.py
+pylint file.py
 
 time = [time for time in np.linspace(0, 40, 10) for n in range(2)]
 print(time)
@@ -736,3 +749,29 @@ vector_col = np.array([[1], [2]. [3]])
 Creating a matrix:
 matrix = np.array([[1,2], [1,2], [1,2]])
 matrix_obj = np.mat([[1,2], [1,2], [1,2]])
+
+# Seaborn
+import seaborn as sns
+splot = sns.regplot(x='fieldname1', y='fieldname2', data=dfname, fit reg=False)
+splot.set(xscale='log')  # logrithm plot
+Note: https://cmdlinetips.com/2019/04/how-to-make-scatter-plot-in-python/
+
+Python Programming Books:
+1. Automate the Boring Stuff with Python by Al Sweigart
+2. Effective Python: 59 Specific ways to write better Python by Brett Slatkin
+3. Fluent Python: Clear, Concise and Effective Programming by Luciano Ramalho
+4. Hello Web App by Tracy Osborn
+5. Invent Your Own Computer Games with Python by Al Sweigart
+6. Learning Python by Mark Lutz and David Ascher
+7. Learning Python: Learn to code like a professional with Python by Fabrizio Romano
+8. Learn to Program with Python 3 by Irv Kalb
+9. Programming Arcade Games with Python and Pygame by Paul Craven
+10. Python 101 by Mike Driscoll
+11. Python3 Object-oriented Programming by Dusty Philips
+12. Python Cookbook by David Beazley and Brian K. Jones
+13. Python Scripting with Scribus by Greg Pittman
+14. Python Tricks: The Book by Dan Bader
+15. Scaling Python by Julien Danjou
+16. The Hacker's Guide to Python by Julien Danjou
+17. The Quick Python Book by Naomi Ceder
+18. Treading on Python: Volume 2 Intermediate Python by Matt Harrison
