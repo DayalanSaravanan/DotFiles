@@ -19,6 +19,9 @@ adding rw init=/bin/bash to boot parameters will open a full root session for an
 happens to push the power button on your PC. If you think you might need this kind of 
 access, I would advise you to create a secure BIOS or GRUB password to protect yourself.
 
+Note:
+always tar up a directory, not an individual files
+
 echo $LANG
 
 name=newton
@@ -424,8 +427,9 @@ Note: refer man chgrp (Examples section)
 
 # irssi - https://freenode.net/kb/answer/registration
 https://irssi.org/documentation/startup/
+Help regarding registration - /msg NickServ help register
 Register your IRC nick - /msg NickServ REGISTER password youremail@example.com
-Logging in - /connect chat.freenode.net 6667 account_name:password
+Logging in - /connect chat.freenode.net 6667/6697 account_name:password
 /network list
 /nick name
 /connect Freenode
@@ -577,8 +581,8 @@ hostname -I # list ip address of network
 youtube-dl --extract-audio --audio-format mp3 url # to download mp3 format
 youtube-dl -F url # to find best video
 youtube-dl -f no url # to download
-sudo pip install --upgrade youtube-dl
-sudo pip install --upgrade pip # to update pip
+pip install --upgrade youtube-dl
+pip install --upgrade pip # to update pip
 https://stackoverflow.com/questions/49836676/error-after-upgrading-pip-cannot-import-
 name-main
 https://askubuntu.com/questions/380438/how-can-i-update-youtube-dl
@@ -663,8 +667,6 @@ Report data               : /var/log/lynis-report.dat
 sudo pip install --upgrade pip # to upgrade pip to latest version
 sudo pip install ps_mem
 sudo ps_mem | less # to run ps_mem
-
-thecloudfile@protonmail.com aePh1tha
 
 # Private Browsing using Tor and I2P
 
@@ -794,9 +796,9 @@ ytdl2 --no-playlist "$(< url.txt)"
 # youtube-dl
 :yank # type :yank in qutebrowser to copy the url
 xclip -o -selection clipboard > url.txt  # write the url in url.txt
-sudo youtube-dl -F --no-playlist "$(< url.txt)" # list the available formats
-sudo youtube-dl -f 22 --no-playlist -f 22 --no-playlist "$(< url.txt)"
-sudo python3 -m pip install --upgrade youtube-dl
+youtube-dl -F --no-playlist "$(< url.txt)" # list the available formats
+youtube-dl -f 22 --no-playlist -f 22 --no-playlist "$(< url.txt)"
+python3 -m pip install --upgrade youtube-dl
 
 # xrandr
 xrandr --listmonitors    # this command gives the <output name> for the command below
@@ -809,6 +811,7 @@ rclone ls remote:    # List all the files in your pCloud
 rclone copy /home/source remote:backup # To copy a local directory to an pCloud 
                                          directory called backup (note: created one)
 rclone sync /home/source remote:directory_name # To sync a local directory to a remote
+rclone sync -P /home/source remote:directory_name # -P progress
 rclone sync /home/source remote:directory_name --dry-run
 rclone move /home/source remote:directory_name
 rclone delete remote:path
@@ -827,6 +830,7 @@ rclone mount remote:path/to/files /path/to/local/mount # Mount the remote as fil
 rclone ncdu remote: # Explore a remote with a text based user interface
 rclone touch remote:path # create new file or change file modification time
 rclone tree remote:path # list the contents of the remote in a tree like fashion
+rclone move remote:GRE remote:Books/GRE/
 
 # IP
 sudo ip addr show  # to check an IP address
@@ -841,8 +845,6 @@ systemctl status ufw  # to check the status of ufw
 
 # journald
 sudo journalctl -b    # log messages right from the system boot
-
-eth5ahNu
 
 #nextcloud
 https://nextcloud-fi.webo.hosting/login
@@ -1419,7 +1421,7 @@ mpv --list-options
 # route
 route -n
 
-# nslookup
+# nslookup - query Internet name servers interactively
 nslookup <url> 
 nslookup -query=mx <url>
 nslookup -type=ns <url>   # query name server
@@ -1454,6 +1456,9 @@ mkpasswd -l 10
 convert source.jpg -colorspace Gray destination.jpg # true grayscale only
 convert source.jpg -monochrome destination.jpg      # true black and white
 convert source.jpg -separate destination.jpg        # separate into gray channels
+identify <image>                                    # list size of image
+convert -crop +0+100 <input_image> <output_image>   # croping the image from top
+convert -crop +0-100 <input_image> <output_image>   # croping the image from bottom
 
 # Installing the same selection of packages several times
 It can be useful to systematically install the same list of packages on several 
@@ -1494,13 +1499,23 @@ in the total
 Note: Always read offical installation guide for Debian/Ubuntu
 
 # find
-find ~ -name bu -type d     # search for 'bu' directories in ~
-find . -name my_file.txt    # search for my_file.txt in .
+find . -print               # print all files and directories in current directory
+find . -type f -ls          # print all files with details
+find . -type f              # print only files in current directory, no directory 
+find . -type d              # print only directories in current directory, no files
+find ~ -name bu -type d     # print only 'bu' directories in ~
+find . -name my_file.txt    # print only my_file.txt in .
 find ~ -name '*.txt'        # search for '*.txt' in ~
 find . -iname '*.jpg'       # find files by case-insensitive extension (ex: .jpg, .JPG)
-find . -type d              # to find directories
-find . -type f              # to find files
 find . -type f -perm 777    # to find files by octal permission
+find . -size +10M -print    # find all files larger than 10M
+find . -type f -mmin -60    # find all files that were changed within the last 60 min.
+find . -type f -exec mv {} {}.py # add all files with ".py" at the end
+find . -type f -name "*cmd*" # find files whose names have the string "cmd"
+find . -type f -name "*cmd*" or -name "*line*"  # find files whose names have the string
+find . -type f -name "*cmd*" and -name "*line*" # find files whose names have the string
+find * -prune -type d -exec du -skh {} \; # find all directories in the current 
+					    directory and their disk usage
 
 # wn - command line interface to WordNet lexical database
 wn perusing -over # to find definition of word perusing
@@ -1517,11 +1532,22 @@ ctrl P / ctrl N # backward and forward of commands in history in the shell promp
 # wn - command line interface to WordNet lexical database 
 wn <word> -over  # read wn man page
 
-# nmap
+# nmap - Network exploration tool and security/port scanner 
+nmap -h # Nmap help
+nmap scanme.nmap.org        # default scan 1000 ports
+nmap -p 22 scanme.nmap.org  # scan port 22 alone
+nmap -A scanme.nmap.org     # OS information
+nmap -F scanme.nmap.org     # most important targeted ports 
+nmap -sV scanme.nmap.org    # short information
+nmap --open scanme.nmap.org # open ports alone
 ifconfig
 ipcalc 192.168.42.136
 nmap -F 192.168.42.8/24
 sudo arp-scan -l
+https://nmap.org/
+https://www.nirsoft.net/countryip/  # Major IP Addresses Blocks by Country
+who is <ip_address> # in web browser
+geoiplookup.net/ip-addresses/<ip_address>
 
 # checking package integrity
 The md5sum command is used to compute a 128-bit fingerprint that is strongly dependant
@@ -1754,9 +1780,6 @@ Step 3: Format with vFat file system  $ sudo mkfs.vfat /dev/sdc1
         Format with NTFS file system  $ sudo mkfs.ntfs /dev/sdc1
         Format with EXT4 file system  $ sudo mkfs.ext4 /dev/sdc1
 
-
-shei4eiT/hei4eiT
-
 # Translate html to text
 cat index.html | w3m -dump -T text/html > index.txt
 
@@ -1863,3 +1886,7 @@ hdparm -i /dev/sda   # displays the serial number
 # Hex codes
 Hex: #101718  RGBA(16,23,24,1)
 HeX: #1f2a2e  RGBA(31,42,46,1)
+
+# awk
+awk 'NR==100' filename.txt # print text in line number 100 from filename.txt
+awk 'NR>=100 && NR<=110' filename.txt # print text between lines 100 and 110
