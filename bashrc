@@ -37,7 +37,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+    xterm-color|*-256color) color_prompt=yes;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -116,3 +116,14 @@ fi
 
 # shell function for finding factorial of the integer
 fact() { (echo 1; seq $1) | paste -s -d\* | bc; }
+
+# youtube-dl alias
+alias ytdl0='youtube-dl --extract-audio --audio-format mp3'
+alias ytdl1='youtube-dl -F'
+alias ytdl2='youtube-dl -f'
+
+# screencast
+alias scast='ffmpeg x11grab -r 30 -s 1920x1080 -i :0.0 -acodec aac -vcodec libx264 -crf 0 -preset medium output.mp4'
+
+# julia-1.5.3 path
+export PATH="$PATH:/home/saran/.julia/julia-1.5.3/bin/"
