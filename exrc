@@ -18,5 +18,8 @@ hi LineNr ctermfg=DarkGrey ctermbg=None
 hi TabLineFill ctermfg=233 ctermbg=None
 hi TabLine ctermfg=DarkGrey ctermbg=None
 hi TabLineSel ctermfg=White ctermbg=None
+autocmd Filetype c setlocal ts=8 sw=8 sts=0 noexpandtab
+autocmd Filetype html setlocal ts=2 sw=2 expandtab
+autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 noexpandtab
 let @d=':.s/<pre><code>/<p>'
 let @e=':.s/<\/code><\/pre>/<\/p>'
