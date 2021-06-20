@@ -141,3 +141,6 @@ config.set('content.javascript.enabled', True, 'qute://*/*')
 # Default zoom level.
 # Type: Perc
 c.zoom.default = '67'
+
+# Setting dark mode
+config.set('colors.webpage.darkmode.enabled', True)
